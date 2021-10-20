@@ -2,6 +2,5 @@
 
 
 # Authors
-
-Heather Thomas
-Caleb Oke
+- Heather Thomas
+- Caleb Oke
