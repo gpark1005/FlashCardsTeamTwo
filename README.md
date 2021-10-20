@@ -5,4 +5,4 @@
 - Heather Thomas
 - Caleb Oke
 - Austin Nicholson
-- Gabe Hilliard
+- ***Gabe Hilliard***
