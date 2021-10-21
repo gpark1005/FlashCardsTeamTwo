@@ -1,5 +1,7 @@
 package entities
 
+import "github.com/google/uuid"
+
 type FlashCardStruct struct {
 	Id            string
 	Category      string
@@ -31,4 +33,8 @@ type CardOption struct {
 	Two   string
 	Three string
 	Four  string
+}
+
+func (f *FlashCardStruct) SetId() {
+	f.Id = uuid.New().String()
 }
