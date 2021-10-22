@@ -1,8 +1,6 @@
 package service
 
 import (
-	"reflect"
-
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
@@ -20,9 +18,25 @@ func NewFlashcardService(f IFlashcardRepo) FlashcardService {
 	}
 }
 
-func (f FlashcardService) Create(card interface{}) error {
+func (f FlashcardService) CreateMatching(card entities.Matching) error {
+	card.SetMatchingId()
+	return nil //placeholder
 
-	switch reflect.TypeOf(card) {
-	case reflect.TypeOf(entities.Matching):
-	}
+}
+
+func (f FlashcardService) CreateTrueFalse(card entities.TrueFalse) error {
+	card.SetTrueFalseId()
+	return nil
+}
+
+func (f FlashcardService) CreateInfo(card entities.Info) error {
+	card.SetInfoId()
+	return nil
+
+}
+
+func (f FlashcardService) CreateMultiple(card entities.Multiple) error {
+	card.SetMultipleId()
+	return nil
+
 }

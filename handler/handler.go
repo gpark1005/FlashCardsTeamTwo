@@ -2,14 +2,18 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
-	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
 type IFlashcardService interface {
-	Create(interface{}) error
+	CreateMatching(entities.Matching) error
+	CreateTrueFalse(entities.TrueFalse) error
+	CreateMultiple(entities.Multiple) error
+	CreateInfo(entities.Info) error
 	GetAll() (entities.FlashCardStruct, error)
 	GetById(string)
 }
@@ -27,7 +31,6 @@ func NewFlashcardHandler(f IFlashcardService) FlashcardHandler {
 func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cardtype := vars["Type"]
-	
 
 	switch cardtype {
 	case "Matching":
@@ -36,7 +39,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		err = f.serv.Create(matchcard)
+		err = f.serv.CreateMatching(matchcard)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
@@ -46,7 +49,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		err = f.serv.Create(multiplecard)
+		err = f.serv.CreateMultiple(multiplecard)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
@@ -57,7 +60,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 
 		}
-		err = f.serv.Create(tfcard)
+		err = f.serv.CreateTrueFalse(tfcard)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
@@ -68,15 +71,13 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 
-		err = f.serv.Create(infocard)
+		err = f.serv.CreateInfo(infocard)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 	}
 
-
-	 w.WriteHeader(http.StatusCreated)
-	 w.Header().Set("Content-Type", "application/json")
-
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
 
 }
