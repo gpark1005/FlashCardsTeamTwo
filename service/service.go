@@ -1,14 +1,8 @@
 package service
 
 
-import (
-	"github.com/gpark1005/FlashCardsTeamTwo/entities"
-
-
-)
-
 type IFlashcardRepo interface {
-	Create(e entities.FlashCardStruct) error 
+	Create(interface{}) error
 }
 
 type FlashcardService struct {
@@ -20,4 +14,6 @@ func NewFlashcardService(f IFlashcardRepo) FlashcardService {
 		Repo : f, 
 	}
 }
+
+
 

@@ -3,38 +3,61 @@ package entities
 import "github.com/google/uuid"
 
 type FlashCardStruct struct {
-	Id            string
-	Category      string
-	Type          string
-	Info          string
-	MatchQuestion CardQuestion
-	Question      string
-	MatchAnswer   CardAnswer
-	Answer        string
-	Options       CardOption
+	Matching Matching
+	TrueFalse TrueFalse
+	Multiple Multiple
+	Info Info
 }
 
-type CardQuestion struct {
-	A string
-	B string
-	C string
-	D string
+type Matching struct {
+	Id string
+	Type string
+	Category string
+	Question map[string]interface{}
+	Options map[string]interface{}
+	Answer map[string]interface{}
 }
 
-type CardAnswer struct {
-	A string
-	B string
-	C string
-	D string
+type Multiple struct {
+	Id string
+	Type string
+	Category string
+	Question string
+	Options map[string]interface{}
+	Answer string
 }
 
-type CardOption struct {
-	One   string
-	Two   string
-	Three string
-	Four  string
+type TrueFalse struct {
+	Id string
+	Type string
+	Category string
+	Question string
+	Tf bool
 }
 
-func (f *FlashCardStruct) SetId() {
-	f.Id = uuid.New().String()
+type Info struct {
+	Id string
+	Type string
+	Category string
+	Details string
+}
+
+
+
+
+
+func (f *FlashCardStruct) SetMatchingId() {
+	f.Matching.Id = uuid.New().String()
+}
+
+func (f *FlashCardStruct) SetMultipleId() {
+	f.Multiple.Id = uuid.New().String()
+}
+
+func (f *FlashCardStruct) SetTrueFalseId() {
+	f.TrueFalse.Id = uuid.New().String()
+}
+
+func (f *FlashCardStruct) SetInfoId() {
+	f.Info.Id = uuid.New().String()
 }

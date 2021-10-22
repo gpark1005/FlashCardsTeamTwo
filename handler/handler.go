@@ -1,16 +1,15 @@
 package handler
 
 import (
-	"github.com/gpark1005/FlashCardsTeamTwo/entities"
-	"net/http"
 	"encoding/json"
+	"github.com/gorilla/mux"
+	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 	"log"
-
-
+	"net/http"
 )
 
 type IFlashcardService interface {
-	Create(e entities.FlashCardStruct) error
+	Create(interface{}) error
 	GetAll() (entities.FlashCardStruct, error)
 	GetById(string)
 }
@@ -26,23 +25,58 @@ func NewFlashcardHandler(f IFlashcardService) FlashcardHandler {
 }
 
 func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	cardtype := vars["Type"]
+	
 
-	 postCard := entities.FlashCardStruct{}
+	switch cardtype {
+	case "Matching":
+		matchcard := entities.Matching{}
+		err := json.NewDecoder(r.Body).Decode(&matchcard)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		err = f.serv.Create(matchcard)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	case "Multiple":
+		multiplecard := entities.Multiple{}
+		err := json.NewDecoder(r.Body).Decode(&multiplecard)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		err = f.serv.Create(multiplecard)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	case "TF":
+		tfcard := entities.TrueFalse{}
+		err := json.NewDecoder(r.Body).Decode(&tfcard)
+		if err != nil {
+			log.Fatalln(err)
 
-	 err := json.NewDecoder(r.Body).Decode(&postCard)
-	 if err != nil {
-		 log.Fatalln(err)
-	 }
+		}
+		err = f.serv.Create(tfcard)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	case "Info":
+		infocard := entities.Info{}
+		err := json.NewDecoder(r.Body).Decode(&infocard)
+		if err != nil {
+			log.Fatalln(err)
+		}
 
-	 err = f.serv.Create(postCard)
-	 if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	 }
+		err = f.serv.Create(infocard)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+
 
 	 w.WriteHeader(http.StatusCreated)
 	 w.Header().Set("Content-Type", "application/json")
 
-	 
 
-	 
 }
