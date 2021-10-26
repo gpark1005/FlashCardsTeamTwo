@@ -15,7 +15,7 @@ type IFlashcardService interface {
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
-	//GetAll() (entities.FlashCardStruct, error)
+	GetAll() (entities.FlashCardStruct, error)
 	//GetById(string)
 }
 
@@ -93,5 +93,26 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
+
+}
+
+func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
+	allCards, err := f.serv.GetAll() 
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+
+	}
+
+	allCardsBytes, err := json.MarshalIndent(allCards, "", " ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	
+	}
+
+	w.Write(allCardsBytes)
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
+	
+	
 
 }

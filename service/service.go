@@ -208,3 +208,6 @@ func (f FlashcardService) CreateQandA(card entities.QandA) error {
 	return f.Repo.CreateQandA(card)
 
 }
+
+
+func (f FlashcardService) GetAll() 
