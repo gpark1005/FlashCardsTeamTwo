@@ -3,10 +3,11 @@ package entities
 import "github.com/google/uuid"
 
 type FlashCardStruct struct {
-	Matching  Matching
-	TrueFalse TrueFalse
-	Multiple  Multiple
-	Info      Info
+	Matching  []Matching
+	TrueFalse []TrueFalse
+	Multiple  []Multiple
+	Info      []Info
+	QandA 	  []QandA
 }
 
 type Matching struct {
@@ -32,7 +33,7 @@ type TrueFalse struct {
 	Type     string
 	Category string
 	Question string
-	Tf       bool
+	Tf       string 
 }
 
 type Info struct {
@@ -40,6 +41,14 @@ type Info struct {
 	Type     string
 	Category string
 	Details  string
+}
+
+type QandA struct {
+	Id string
+	Type string
+	Category string
+	Question string 
+	Answer string 
 }
 
 func (f *Matching) SetMatchingId() {
@@ -55,5 +64,9 @@ func (f *TrueFalse) SetTrueFalseId() {
 }
 
 func (f *Info) SetInfoId() {
+	f.Id = uuid.New().String()
+}
+
+func (f *QandA) SetQandAId() {
 	f.Id = uuid.New().String()
 }

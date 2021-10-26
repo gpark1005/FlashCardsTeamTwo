@@ -103,17 +103,86 @@ func (f FlashcardService) CreateMatching(card entities.Matching) error {
 
 func (f FlashcardService) CreateTrueFalse(card entities.TrueFalse) error {
 	card.SetTrueFalseId()
-	return nil
+
+	cardType := strings.ToLower(card.Type)
+	cardCategory := strings.ToLower(card.Category)
+	cardQuestion := card.Question 
+	cardTf := strings.ToLower(card.Tf)
+
+	if cardType != "truefalse" {
+		return BadRequest
+	}
+
+	if cardCategory != "golang" {
+		return BadRequest 
+	}
+
+	if len(cardQuestion) == 0 {
+		return BadRequest //bad request
+	}
+	if cardTf != "true" && cardTf != "false" {
+		return BadRequest
+
+	}
+
+	return f.Repo.CreateTrueFalse(card)
+
+	
 }
 
 func (f FlashcardService) CreateInfo(card entities.Info) error {
 	card.SetInfoId()
-	return nil
+
+	cardType := strings.ToLower(card.Type)
+	cardCategory := strings.ToLower(card.Category)
+	cardDetails := card.Details
+
+	if cardType != "info" {
+		return BadRequest //bad request
+	}
+	if cardCategory != "golang" {
+		return BadRequest //bad request
+	}
+	if len(cardDetails) == 0 {
+		return BadRequest
+	}
+	return f.Repo.CreateInfo(card)
+	
 
 }
 
 func (f FlashcardService) CreateMultiple(card entities.Multiple) error {
 	card.SetMultipleId()
-	return nil
+
+	cardType := strings.ToLower(card.Type)
+	cardCategory := strings.ToLower(card.Category)
+	cardQuestion := card.Question
+	cardOption := card.Options
+	cardAnswer := card.Answer
+
+	if cardType != "multiple" {
+		return BadRequest //bad request
+	}
+	if cardCategory != "golang" {
+		return BadRequest //bad request
+	}
+	if len(cardQuestion) == 0 || len(cardQuestion) < 2 {
+		return BadRequest //bad request
+	}
+	if len(cardOption) == 0 {
+		return BadRequest //bad request
+	} else {
+		for _, v := range cardOption {
+			if v == nil {
+				return BadRequest //bad request
+			}
+		}
+	}
+	if len(cardAnswer) == 0 {
+		return BadRequest
+	} else if _, ok := cardOption[cardAnswer]; !ok {
+		return BadRequest
+	}
+	return f.Repo.CreateMultiple(card)
 
 }
