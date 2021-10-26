@@ -186,3 +186,28 @@ func (f FlashcardService) CreateMultiple(card entities.Multiple) error {
 	return f.Repo.CreateMultiple(card)
 
 }
+
+func (f FlashcardService) CreateQandA(card entities.QandA) error {
+	card.SetQandAId()
+
+	cardType := strings.ToLower(card.Type)
+	cardCategory := strings.ToLower(card.Category)
+	cardQuestion := card.Question
+	cardAnswer := card.Answer
+
+	if cardType != "qanda" {
+		return BadRequest //bad request
+	}
+	if cardCategory != "golang" {
+		return BadRequest //bad request
+	}
+	if len(cardQuestion) == 0 || len(cardQuestion) < 2 {
+		return BadRequest //bad request
+	}
+	if len(cardAnswer) == 0 || len(cardQuestion) < 2 {
+		return BadRequest //bad request
+	}
+	return f.Repo.CreateQandA(card)
+
+}
+

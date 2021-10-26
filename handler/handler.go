@@ -14,13 +14,15 @@ type IFlashcardService interface {
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
-	GetAll() (entities.FlashCardStruct, error)
-	GetById(string)
+	CreateQandA(entities.QandA) error
+	//GetAll() (entities.FlashCardStruct, error)
+	//GetById(string)
 }
 
 type FlashcardHandler struct {
 	serv IFlashcardService
 }
+
 
 func NewFlashcardHandler(f IFlashcardService) FlashcardHandler {
 	return FlashcardHandler{
@@ -53,7 +55,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-	case "TF":
+	case "TrueFalse":
 		tfcard := entities.TrueFalse{}
 		err := json.NewDecoder(r.Body).Decode(&tfcard)
 		if err != nil {
@@ -75,6 +77,18 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
+	case "QandA" :
+		QandAcard := entities.QandA{}
+		err := json.NewDecoder(r.Body).Decode(&QandAcard)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		err = f.serv.CreateQandA(QandAcard)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+
 	}
 
 	w.WriteHeader(http.StatusCreated)

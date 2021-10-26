@@ -1,6 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"github.com/gpark1005/FlashCardsTeamTwo/Repo"
+	"github.com/gpark1005/FlashCardsTeamTwo/handler"
+	"github.com/gpark1005/FlashCardsTeamTwo/service"
+	"net/http"
+
 	//"net/http"
 	"log"
 	"path/filepath"
@@ -11,7 +17,7 @@ import (
 
 func main() {
 
-	filename := "structFlashCard.json"
+	filename := "flashcard.json"
 
 	ext := filepath.Ext(filename)
 
@@ -19,18 +25,19 @@ func main() {
 		log.Fatalln("Invalid file")
 	}
 
-	//router := handler.NewRouter(handler)
+	Repo := Repo.NewFlashcardRepo(filename)
+	serv := service.NewFlashcardService(Repo)
+	handle := handler.NewFlashcardHandler(serv)
 
-	/*server := &http.Server{
+	router := handler.ConfigureRouter(handle)
+
+	server := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:8080",
 	}
-
-
 
 	fmt.Println("Successfully running server 8080")
 
 	log.Fatal(server.ListenAndServe())
 
-	*/
 }
