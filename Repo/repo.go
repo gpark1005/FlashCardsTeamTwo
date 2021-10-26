@@ -2,15 +2,14 @@ package Repo
 
 import (
 	"encoding/json"
-	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 	"io/ioutil"
 	"net/rpc"
+
+	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
-
-
 type flashcardRepo struct {
-	filename string 
+	filename string
 }
 
 func NewFlashcardRepo(filename string) flashcardRepo {
@@ -19,7 +18,7 @@ func NewFlashcardRepo(filename string) flashcardRepo {
 	}
 }
 
-func (r flashcardRepo) CreatMatching (card entities.Matching) error {
+func (r flashcardRepo) CreateMatching(card entities.Matching) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
 		return rpc.ServerError("unable to read info")
@@ -115,7 +114,7 @@ func (r flashcardRepo) CreateInfo(card entities.Info) error {
 func (r flashcardRepo) CreateQandA(card entities.QandA) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc. ServerError("unable to read info")
+		return rpc.ServerError("unable to read info")
 	}
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
@@ -133,5 +132,3 @@ func (r flashcardRepo) CreateQandA(card entities.QandA) error {
 
 	return nil
 }
-
-

@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gpark1005/FlashCardsTeamTwo/Repo"
 	"github.com/gpark1005/FlashCardsTeamTwo/handler"
 	"github.com/gpark1005/FlashCardsTeamTwo/service"
-	"net/http"
 
 	//"net/http"
 	"log"
@@ -17,7 +18,7 @@ import (
 
 func main() {
 
-	filename := "flashcard.json"
+	filename := "structFlashCard.json"
 
 	ext := filepath.Ext(filename)
 

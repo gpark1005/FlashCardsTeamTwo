@@ -97,7 +97,7 @@ func (f FlashcardService) CreateMatching(card entities.Matching) error {
 
 		}
 	}
-	return f.CreateMatching(card)
+	return f.Repo.CreateMatching(card)
 
 }
 
@@ -106,28 +106,27 @@ func (f FlashcardService) CreateTrueFalse(card entities.TrueFalse) error {
 
 	cardType := strings.ToLower(card.Type)
 	cardCategory := strings.ToLower(card.Category)
-	cardQuestion := card.Question 
-	cardTf := strings.ToLower(card.Tf)
+	cardQuestion := card.Question
+	cardAnswer := strings.ToLower(card.Answer)
 
 	if cardType != "truefalse" {
 		return BadRequest
 	}
 
 	if cardCategory != "golang" {
-		return BadRequest 
+		return BadRequest
 	}
 
 	if len(cardQuestion) == 0 {
 		return BadRequest //bad request
 	}
-	if cardTf != "true" && cardTf != "false" {
+	if cardAnswer != "true" && cardAnswer != "false" {
 		return BadRequest
 
 	}
 
 	return f.Repo.CreateTrueFalse(card)
 
-	
 }
 
 func (f FlashcardService) CreateInfo(card entities.Info) error {
@@ -147,7 +146,6 @@ func (f FlashcardService) CreateInfo(card entities.Info) error {
 		return BadRequest
 	}
 	return f.Repo.CreateInfo(card)
-	
 
 }
 
@@ -210,4 +208,3 @@ func (f FlashcardService) CreateQandA(card entities.QandA) error {
 	return f.Repo.CreateQandA(card)
 
 }
-
