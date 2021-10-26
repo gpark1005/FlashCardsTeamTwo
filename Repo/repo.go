@@ -132,3 +132,27 @@ func (r flashcardRepo) CreateQandA(card entities.QandA) error {
 
 	return nil
 }
+
+
+func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) { 
+	deck := entities.FlashCardStruct{}
+	allCards := []entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return allCards, rpc.ServerError("unable to read info")
+	}
+
+	
+	err = json.Unmarshal(file, &deck)
+	if err != nil {
+		return allCards, rpc.ServerError("unable to create deck")
+	}
+	
+
+	allCards = append(allCards, deck)
+
+	return allCards, nil 
+
+
+}

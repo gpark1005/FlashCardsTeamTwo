@@ -13,6 +13,7 @@ type IFlashcardRepo interface {
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
+	GetAll() ([]entities.FlashCardStruct, error) 
 }
 
 type FlashcardService struct {
@@ -210,4 +211,12 @@ func (f FlashcardService) CreateQandA(card entities.QandA) error {
 }
 
 
-func (f FlashcardService) GetAll() 
+func (f FlashcardService) GetAll() ([]entities.FlashCardStruct, error) {
+	allCards, err := f.Repo.GetAll()
+	if err != nil {
+		return allCards, BadRequest
+	}
+
+	return allCards, nil 
+
+}

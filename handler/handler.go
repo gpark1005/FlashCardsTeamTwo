@@ -15,7 +15,7 @@ type IFlashcardService interface {
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
-	GetAll() (entities.FlashCardStruct, error)
+	GetAll() ([]entities.FlashCardStruct, error)
 	//GetById(string)
 }
 
