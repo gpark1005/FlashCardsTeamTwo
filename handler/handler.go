@@ -16,7 +16,7 @@ type IFlashcardService interface {
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
-	GetById(string) ([]entities.FlashCardStruct, error)
+	GetById(string) (entities.FlashCardStruct, error)
 }
 
 type FlashcardHandler struct {

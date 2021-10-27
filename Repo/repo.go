@@ -156,3 +156,72 @@ func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 
 
 }
+
+func (r flashcardRepo) GetById(id string) (entities.FlashCardStruct, error) {
+	deck:= entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return deck, err
+	}
+
+	err = json.Unmarshal(file, &deck)
+	if err != nil {
+		return deck, err
+	}
+
+
+
+	if len(deck.Matching) > 0 {
+		match := entities.Matching{}
+		for _, v := range deck.Matching {
+			for _, val := range match {
+
+			}
+
+		}
+	}
+
+	//if len(deck.TrueFalse) > 0 {
+	//	for _, v := range deck.TrueFalse{
+	//		if v.Id == id {
+	//
+	//			return deck, nil
+	//		}
+	//
+	//	}
+	//}
+	//
+	//if len(deck.Info) > 0 {
+	//	for _, v := range deck.Info{
+	//		if v.Id == id {
+	//
+	//			return v, nil
+	//		}
+	//
+	//	}
+	//}
+	//
+	//if len(deck.Multiple) > 0 {
+	//	for _, v := range deck.Multiple{
+	//		if v.Id == id {
+	//
+	//			return v, nil
+	//		}
+	//
+	//	}
+	//}
+	//
+	//if len(deck.QandA) > 0 {
+	//	for _, v := range deck.QandA{
+	//		if v.Id == id {
+	//
+	//			return v, nil
+	//		}
+	//
+	//	}
+	//}
+
+
+
+}
