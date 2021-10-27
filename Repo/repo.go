@@ -133,8 +133,7 @@ func (r flashcardRepo) CreateQandA(card entities.QandA) error {
 	return nil
 }
 
-
-func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) { 
+func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 	deck := entities.FlashCardStruct{}
 	allCards := []entities.FlashCardStruct{}
 
@@ -143,22 +142,19 @@ func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 		return allCards, rpc.ServerError("unable to read info")
 	}
 
-	
 	err = json.Unmarshal(file, &deck)
 	if err != nil {
 		return allCards, rpc.ServerError("unable to create deck")
 	}
-	
 
 	allCards = append(allCards, deck)
 
-	return allCards, nil 
-
+	return allCards, nil
 
 }
 
 func (r flashcardRepo) GetById(id string) (entities.FlashCardStruct, error) {
-	deck:= entities.FlashCardStruct{}
+	deck := entities.FlashCardStruct{}
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
@@ -170,58 +166,68 @@ func (r flashcardRepo) GetById(id string) (entities.FlashCardStruct, error) {
 		return deck, err
 	}
 
-
-
 	if len(deck.Matching) > 0 {
-		match := entities.Matching{}
+		cards := entities.FlashCardStruct{}
 		for _, v := range deck.Matching {
-			for _, val := range match {
+			if v.Id == id {
 
+				cards.Matching = append(cards.Matching, v)
+				return cards, nil
 			}
 
 		}
 	}
 
-	//if len(deck.TrueFalse) > 0 {
-	//	for _, v := range deck.TrueFalse{
-	//		if v.Id == id {
-	//
-	//			return deck, nil
-	//		}
-	//
-	//	}
-	//}
-	//
-	//if len(deck.Info) > 0 {
-	//	for _, v := range deck.Info{
-	//		if v.Id == id {
-	//
-	//			return v, nil
-	//		}
-	//
-	//	}
-	//}
-	//
-	//if len(deck.Multiple) > 0 {
-	//	for _, v := range deck.Multiple{
-	//		if v.Id == id {
-	//
-	//			return v, nil
-	//		}
-	//
-	//	}
-	//}
-	//
-	//if len(deck.QandA) > 0 {
-	//	for _, v := range deck.QandA{
-	//		if v.Id == id {
-	//
-	//			return v, nil
-	//		}
-	//
-	//	}
-	//}
+	if len(deck.TrueFalse) > 0 {
+		cards := entities.FlashCardStruct{}
+		for _, v := range deck.TrueFalse {
+			if v.Id == id {
+				cards.TrueFalse = append(cards.TrueFalse, v)
 
+				return cards, nil
+			}
 
+		}
+	}
 
+	if len(deck.Info) > 0 {
+		cards := entities.FlashCardStruct{}
+		for _, v := range deck.Info {
+			if v.Id == id {
+
+				cards.Info = append(cards.Info, v)
+
+				return cards, nil
+			}
+
+		}
+	}
+
+	if len(deck.Multiple) > 0 {
+		cards := entities.FlashCardStruct{}
+		for _, v := range deck.Multiple {
+			if v.Id == id {
+
+				cards.Multiple = append(cards.Multiple, v)
+
+				return cards, nil
+			}
+
+		}
+	}
+
+	if len(deck.QandA) > 0 {
+		cards := entities.FlashCardStruct{}
+		for _, v := range deck.QandA {
+			if v.Id == id {
+
+				cards.QandA = append(cards.QandA, v)
+
+				return cards, nil
+			}
+
+		}
+	}
+
+	return deck, NotFound
 }
