@@ -16,13 +16,12 @@ type IFlashcardService interface {
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
-	//GetById(string)
+	GetById(string) ([]entities.FlashCardStruct, error)
 }
 
 type FlashcardHandler struct {
 	serv IFlashcardService
 }
-
 
 func NewFlashcardHandler(f IFlashcardService) FlashcardHandler {
 	return FlashcardHandler{
@@ -77,7 +76,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
-	case "QandA" :
+	case "QandA":
 		QandAcard := entities.QandA{}
 		err := json.NewDecoder(r.Body).Decode(&QandAcard)
 		if err != nil {
@@ -97,7 +96,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 }
 
 func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
-	allCards, err := f.serv.GetAll() 
+	allCards, err := f.serv.GetAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
@@ -106,13 +105,19 @@ func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	allCardsBytes, err := json.MarshalIndent(allCards, "", " ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
-	
+
 	}
 
 	w.Write(allCardsBytes)
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
-	
-	
+
+}
+
+func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	cardId := vars["Id"]
+
+	f.serv.GetById(cardId)
 
 }
