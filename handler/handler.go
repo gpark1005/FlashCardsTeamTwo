@@ -109,7 +109,7 @@ func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(allCardsBytes)
-	w.WriteHeader(http.StatusCreated)
+
 	w.Header().Set("Content-Type", "application/json")
 
 }
@@ -121,18 +121,17 @@ func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	card, err := f.serv.GetById(cardId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	cardBytes, err := json.MarshalIndent(card, "", " ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 
 	}
 
-
-
-
-	w.Write(cardBytes)
-	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
+	w.Write(cardBytes)
+
 }

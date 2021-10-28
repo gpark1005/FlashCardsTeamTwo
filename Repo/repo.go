@@ -155,71 +155,21 @@ func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 
 func (r flashcardRepo) GetById(id string) (interface{}, error) {
 	deck := entities.FlashCardStruct{}
-
-	var returnDeck  interface{}
-
+	var returnDeck interface{}
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
 		return returnDeck, err
 	}
 
-
-
 	err = json.Unmarshal(file, &deck)
 	if err != nil {
 		return returnDeck, err
 	}
-
-	if len(deck.Matching) > 0 {
-		for _, v := range deck.Matching {
-			if v.Id == id {
-				returnDeck = v
-				return returnDeck, nil
-			}
-
-		}
+	returnDeck, err = IdCheck(id, deck)
+	if err != nil {
+		return returnDeck, NotFound
 	}
 
-	if len(deck.TrueFalse) > 0 {
-		for _, v := range deck.TrueFalse {
-			if v.Id == id {
-				returnDeck = v
-				return returnDeck, nil
-			}
-
-		}
-	}
-
-	if len(deck.Info) > 0 {
-		for _, v := range deck.Info {
-			if v.Id == id {
-				returnDeck = v
-				return returnDeck, nil
-			}
-
-		}
-	}
-
-	if len(deck.Multiple) > 0 {
-		for _, v := range deck.Multiple {
-			if v.Id == id {
-				returnDeck = v
-				return returnDeck, nil
-			}
-
-		}
-	}
-
-	if len(deck.QandA) > 0 {
-		for _, v := range deck.QandA {
-			if v.Id == id {
-				returnDeck = v
-				return returnDeck, nil
-			}
-
-		}
-	}
-
-	return deck, NotFound
+	return returnDeck, nil
 }
