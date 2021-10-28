@@ -16,7 +16,7 @@ type IFlashcardService interface {
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
-	GetById(string) (entities.FlashCardStruct, error)
+	GetById(string) (interface{}, error)
 }
 
 type FlashcardHandler struct {
@@ -118,6 +118,21 @@ func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cardId := vars["Id"]
 
-	f.serv.GetById(cardId)
+	card, err := f.serv.GetById(cardId)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
 
+	cardBytes, err := json.MarshalIndent(card, "", " ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+
+	}
+
+
+
+
+	w.Write(cardBytes)
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
 }

@@ -14,7 +14,7 @@ type IFlashcardRepo interface {
 	CreateInfo(entities.Info) error
 	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
-	GetById(string) (entities.FlashCardStruct, error)
+	GetById(string) (interface{}, error)
 }
 
 type FlashcardService struct {
@@ -221,7 +221,7 @@ func (f FlashcardService) GetAll() ([]entities.FlashCardStruct, error) {
 
 }
 
-func (f FlashcardService) GetById(id string) (entities.FlashCardStruct, error) {
+func (f FlashcardService) GetById(id string) (interface{}, error) {
 	deck := entities.FlashCardStruct{}
 	if len(id) == 0 {
 		return deck, InvalidId
