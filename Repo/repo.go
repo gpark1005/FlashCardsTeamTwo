@@ -174,3 +174,88 @@ func (r flashcardRepo) GetById(id string) (interface{}, error) {
 	}
 	return returnDeck, nil
 }
+
+func (r flashcardRepo) UpdateMatchingById(id string,card entities.Matching)error {
+	updatedCard := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return err 
+	}
+
+	err = json.Unmarshal(file, &updatedCard)
+	if err != nil {
+		return err 
+	}
+
+
+	for i, v := range updatedCard.Matching {
+		if v.Id == id {
+			updatedCard.Matching = append(updatedCard.Matching[:i], updatedCard.Matching[i+1:]...)
+			v.Type = card.Type
+			v.Category = card.Category
+			v.Question = card.Question 
+			v.Options = card.Options
+			v.Answer = card.Answer
+			updatedCard.Matching = append(updatedCard.Matching, v)
+
+			result, err := json.MarshalIndent(&updatedCard, "", " ")
+			if err != nil {
+				return ServerError
+			}
+
+			err = ioutil.WriteFile(r.filename, result, 0644)
+			if err != nil {
+				return ServerError
+			}
+	
+		
+	    }
+	}
+
+	return NotFound
+
+}
+
+
+func (r flashcardRepo) UpdateMultipleById(id string,card entities.Multiple)error {
+	fc := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return err 
+	}
+
+	err = json.Unmarshal(file, &fc)
+	if err != nil {
+		return err 
+	}
+
+
+	for i, v := range fc.Multiple {
+		if v.Id == id {
+			fc.Multiple = append(fc.Multiple[:i], fc.Multiple[i+1:]...)
+			v.Type = card.Type
+			v.Category = card.Category
+			v.Question = card.Question 
+			v.Options = card.Options
+			v.Answer = card.Answer
+			fc.Multiple = append(fc.Multiple, v)
+
+			result, err := json.MarshalIndent(&fc, "", " ")
+			if err != nil {
+				return ServerError
+			}
+
+			err = ioutil.WriteFile(r.filename, result, 0644)
+			if err != nil {
+				return ServerError
+			}
+	
+		
+	    }
+	}
+
+	return NotFound
+
+}
