@@ -9,8 +9,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
-type IFlashcardService interface {
 
+type IFlashcardService interface {
 	CreateMatching(entities.Matching) error
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
@@ -18,12 +18,11 @@ type IFlashcardService interface {
 	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
 	GetById(string) (interface{}, error)
-	UpdateMatchingById(string,entities.Matching)error
+	UpdateMatchingById(string, entities.Matching) error
 	UpdateMultipleById(string, entities.Multiple) error
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
 	UpdateQandAById(string, entities.QandA) error
-
 }
 
 type FlashcardHandler struct {
@@ -173,7 +172,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 	var c map[string]interface{}
 
-	file, err := ioutil.ReadAll(r.Body)// unmarshal to get the type
+	file, err := ioutil.ReadAll(r.Body) // unmarshal to get the type
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
@@ -183,19 +182,20 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	if cardtype, ok := c["Type"]; ok { //check type in map "if type exist" and get the value which is in cardtype
-		switch cardtype {// switching through cardtype and if matches then we unmarshal pass in id and updated info
+		switch cardtype { // switching through cardtype and if matches then we unmarshal pass in id and updated info
 		case "Matching":
 			matchcard := entities.Matching{}
 			err := json.Unmarshal(file, &matchcard)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = f.serv.UpdateMatchingById(cardId,matchcard)
+			err = f.serv.UpdateMatchingById(cardId, matchcard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte("Card created"))
+			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		case "Multiple":
 			multiplecard := entities.Multiple{}
@@ -204,13 +204,14 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateMultipleById(cardId,multiplecard)
+			err = f.serv.UpdateMultipleById(cardId, multiplecard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
 			}
 
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte("Card created"))
+			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		case "TrueFalse":
 			tfcard := entities.TrueFalse{}
@@ -222,9 +223,10 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			err = f.serv.UpdateTrueFalseById(cardId, tfcard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte("Card created"))
+			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 
 		case "Info":
@@ -237,9 +239,10 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			err = f.serv.UpdateInfoById(cardId, infocard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte("Card created"))
+			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 
 		case "QandA":
@@ -252,9 +255,10 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			err = f.serv.UpdateQandAById(cardId, QandAcard)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte("Card created"))
+			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		}
 

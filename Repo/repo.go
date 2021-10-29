@@ -170,31 +170,29 @@ func (r flashcardRepo) GetById(id string) (interface{}, error) {
 	if err != nil {
 		return returnDeck, NotFound
 
-
 	}
 	return returnDeck, nil
 }
 
-func (r flashcardRepo) UpdateMatchingById(id string,card entities.Matching)error {
+func (r flashcardRepo) UpdateMatchingById(id string, card entities.Matching) error {
 	updatedCard := entities.FlashCardStruct{}
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err 
+		return err
 	}
 
 	err = json.Unmarshal(file, &updatedCard)
 	if err != nil {
-		return err 
+		return err
 	}
-
 
 	for i, v := range updatedCard.Matching {
 		if v.Id == id {
 			updatedCard.Matching = append(updatedCard.Matching[:i], updatedCard.Matching[i+1:]...)
 			v.Type = card.Type
 			v.Category = card.Category
-			v.Question = card.Question 
+			v.Question = card.Question
 			v.Options = card.Options
 			v.Answer = card.Answer
 			updatedCard.Matching = append(updatedCard.Matching, v)
@@ -208,36 +206,34 @@ func (r flashcardRepo) UpdateMatchingById(id string,card entities.Matching)error
 			if err != nil {
 				return ServerError
 			}
-	
-		
-	    }
+			return nil
+
+		}
 	}
 
 	return NotFound
 
 }
 
-
-func (r flashcardRepo) UpdateMultipleById(id string,card entities.Multiple)error {
+func (r flashcardRepo) UpdateMultipleById(id string, card entities.Multiple) error {
 	fc := entities.FlashCardStruct{}
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err 
+		return err
 	}
 
 	err = json.Unmarshal(file, &fc)
 	if err != nil {
-		return err 
+		return err
 	}
-
 
 	for i, v := range fc.Multiple {
 		if v.Id == id {
 			fc.Multiple = append(fc.Multiple[:i], fc.Multiple[i+1:]...)
 			v.Type = card.Type
 			v.Category = card.Category
-			v.Question = card.Question 
+			v.Question = card.Question
 			v.Options = card.Options
 			v.Answer = card.Answer
 			fc.Multiple = append(fc.Multiple, v)
@@ -251,9 +247,128 @@ func (r flashcardRepo) UpdateMultipleById(id string,card entities.Multiple)error
 			if err != nil {
 				return ServerError
 			}
-	
-		
-	    }
+			return nil
+
+		}
+	}
+
+	return NotFound
+
+}
+
+func (r flashcardRepo) UpdateInfoById(id string, card entities.Info) error {
+	fc := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(file, &fc)
+	if err != nil {
+		return err
+	}
+
+	for i, v := range fc.Info {
+		if v.Id == id {
+			fc.Info = append(fc.Info[:i], fc.Info[i+1:]...)
+			v.Type = card.Type
+			v.Category = card.Category
+			v.Details = card.Details
+			fc.Info = append(fc.Info, v)
+
+			result, err := json.MarshalIndent(&fc, "", " ")
+			if err != nil {
+				return ServerError
+			}
+
+			err = ioutil.WriteFile(r.filename, result, 0644)
+			if err != nil {
+				return ServerError
+			}
+			return nil
+
+		}
+	}
+
+	return NotFound
+
+}
+
+func (r flashcardRepo) UpdateQandAById(id string, card entities.QandA) error {
+	fc := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(file, &fc)
+	if err != nil {
+		return err
+	}
+
+	for i, v := range fc.QandA {
+		if v.Id == id {
+			fc.QandA = append(fc.QandA[:i], fc.QandA[i+1:]...)
+			v.Type = card.Type
+			v.Category = card.Category
+			v.Question = card.Question
+			v.Answer = card.Answer
+			fc.QandA = append(fc.QandA, v)
+
+			result, err := json.MarshalIndent(&fc, "", " ")
+			if err != nil {
+				return ServerError
+			}
+
+			err = ioutil.WriteFile(r.filename, result, 0644)
+			if err != nil {
+				return ServerError
+			}
+			return nil
+
+		}
+	}
+
+	return NotFound
+
+}
+
+func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) error {
+	fc := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(file, &fc)
+	if err != nil {
+		return err
+	}
+
+	for i, v := range fc.TrueFalse {
+		if v.Id == id {
+			fc.TrueFalse = append(fc.TrueFalse[:i], fc.TrueFalse[i+1:]...)
+			v.Type = card.Type
+			v.Category = card.Category
+			v.Question = card.Question
+			v.Answer = card.Answer
+			fc.TrueFalse = append(fc.TrueFalse, v)
+
+			result, err := json.MarshalIndent(&fc, "", " ")
+			if err != nil {
+				return ServerError
+			}
+
+			err = ioutil.WriteFile(r.filename, result, 0644)
+			if err != nil {
+				return ServerError
+			}
+			return nil
+
+		}
 	}
 
 	return NotFound
