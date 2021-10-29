@@ -169,7 +169,8 @@ func (r flashcardRepo) GetById(id string) (interface{}, error) {
 	returnDeck, err = IdCheck(id, deck)
 	if err != nil {
 		return returnDeck, NotFound
-	}
 
+
+	}
 	return returnDeck, nil
 }
