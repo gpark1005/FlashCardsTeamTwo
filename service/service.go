@@ -137,7 +137,7 @@ func (f FlashcardService) UpdateMultipleById(id string, card entities.Multiple) 
 
 }
 
-func (f FlashcardService) UpdateQandAById( id string, card entities.QandA) error {
+func (f FlashcardService) UpdateQandAById(id string, card entities.QandA) error {
 	card.SetQandAId()
 	err := ValidateQandA(card)
 	if err != nil {

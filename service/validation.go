@@ -15,36 +15,36 @@ func ValidateMatching(m entities.Matching)error {
 	cardOption := m.Options
 	cardAnswer := m.Answer
 	if cardType != "matching" {
-		return BadRequest //bad request
+		return InvalidType
 	}
 	if cardCategory != "golang" {
-		return BadRequest //bad request
+		return InvalidCategory
 	}
 	if len(cardQuestion) == 0 {
-		return BadRequest //bad request
+		return QuestionsInaccurate
 	} else {
 		for _, v := range cardQuestion { //loop through the map to check every key has a value
 			if v == nil {
-				return BadRequest //bad request
+				return InvalidQuestion
 
 			}
 		}
 	}
 	if len(cardOption) != len(cardQuestion) {
-		return BadRequest //bad request
+		return UnacceptableFormat
 	} else {
 		for _, v := range cardOption {
 			if v == nil {
-				return BadRequest //bad request
+				return ErroneousOptions
 			}
 		}
 	}
 	if len(cardAnswer) != len(cardQuestion) {
-		return BadRequest //bad request
+		return UnacceptableFormat
 	} else {
 		for k, v := range cardAnswer {
 			if v == nil {
-				return BadRequest //bad request
+				return FaultyAnswers
 			} else { //where my issue is with the interface to string
 				valStr := fmt.Sprint(v) //write the interface as a string
 				upperCaseVal := strings.ToUpper(valStr)
@@ -61,7 +61,7 @@ func ValidateMatching(m entities.Matching)error {
 					found = true
 				}
 				if !found {
-					return BadRequest //bad request
+					return MisMatch
 				}
 
 				//compare the option with the value of the cardAnswer
@@ -73,7 +73,7 @@ func ValidateMatching(m entities.Matching)error {
 					found = true
 				}
 				if !found {
-					return BadRequest //bad request
+					return MisMatch
 				}
 			}
 
@@ -89,18 +89,18 @@ func ValidateTrueFalse(tf entities.TrueFalse)error {
 	cardAnswer := strings.ToLower(tf.Answer)
 
 	if cardType != "truefalse" {
-		return BadRequest
+		return InvalidType
 	}
 
 	if cardCategory != "golang" {
-		return BadRequest
+		return InvalidCategory
 	}
 
 	if len(cardQuestion) == 0 {
-		return BadRequest //bad request
+		return InvalidQuestion
 	}
 	if cardAnswer != "true" && cardAnswer != "false" {
-		return BadRequest
+		return AnswerNotAccepted
 
 	}
 	return nil
@@ -112,13 +112,13 @@ func ValidateInfo(i entities.Info) error {
 	cardDetails := i.Details
 
 	if cardType != "info" {
-		return BadRequest //bad request
+		return InvalidType
 	}
 	if cardCategory != "golang" {
-		return BadRequest //bad request
+		return InvalidCategory
 	}
 	if len(cardDetails) == 0 {
-		return BadRequest
+		return InvalidData
 	}
 	return nil
 }
@@ -131,25 +131,25 @@ func ValidateMultiple(mu entities.Multiple) error {
 	cardAnswer := mu.Answer
 
 	if cardType != "multiple" {
-		return BadRequest //bad request
+		return InvalidType
 	}
 	if cardCategory != "golang" {
-		return BadRequest //bad request
+		return InvalidCategory
 	}
 	if len(cardQuestion) == 0  {
-		return BadRequest //bad request
+		return InvalidQuestion
 	}
 	if len(cardOption) == 0 {
-		return BadRequest //bad request
+		return ErroneousOptions
 	} else {
 		for _, v := range cardOption {
 			if v == nil {
-				return BadRequest //bad request
+				return ErroneousOptions
 			}
 		}
 	}
 	if len(cardAnswer) == 0 {
-		return BadRequest
+		return InvalidAnswer
 	} else if _, ok := cardOption[cardAnswer]; !ok {
 		cardType := strings.ToLower(mu.Type)
 		cardCategory := strings.ToLower(mu.Category)
@@ -158,27 +158,27 @@ func ValidateMultiple(mu entities.Multiple) error {
 		cardAnswer := mu.Answer
 
 		if cardType != "multiple" {
-			return BadRequest //bad request
+			return InvalidType
 		}
 		if cardCategory != "golang" {
-			return BadRequest //bad request
+			return InvalidCategory
 		}
 		if len(cardQuestion) == 0 {
-			return BadRequest //bad request
+			return InvalidQuestion
 		}
 		if len(cardOption) == 0 {
-			return BadRequest //bad request
+			return ErroneousOptions
 		} else {
 			for _, v := range cardOption {
 				if v == nil {
-					return BadRequest //bad request
+					return ErroneousOptions
 				}
 			}
 		}
 		if len(cardAnswer) == 0 {
-			return BadRequest
+			return InvalidAnswer
 		} else if _, ok := cardOption[cardAnswer]; !ok {
-			return BadRequest
+			return AnswerNotFound
 		}
 	}
 	return nil
@@ -191,16 +191,16 @@ func ValidateQandA(q entities.QandA) error {
 	cardAnswer := q.Answer
 
 	if cardType != "qanda" {
-		return BadRequest //bad request
+		return InvalidType
 	}
 	if cardCategory != "golang" {
-		return BadRequest //bad request
+		return InvalidCategory
 	}
 	if len(cardQuestion) == 0 {
-		return BadRequest //bad request
+		return InvalidQuestion
 	}
 	if len(cardAnswer) == 0  {
-		return BadRequest //bad request
+		return InvalidAnswer
 	}
 	return nil
 }
