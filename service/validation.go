@@ -2,13 +2,12 @@ package service
 
 import (
 	"fmt"
-	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 	"strings"
+
+	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
-
-
-func ValidateMatching(m entities.Matching)error {
+func ValidateMatching(m entities.Matching) error {
 	cardType := strings.ToLower(m.Type)         //change to lowercase for comparison
 	cardCategory := strings.ToLower(m.Category) //change to lowercase for comparison
 	cardQuestion := m.Question
@@ -24,7 +23,7 @@ func ValidateMatching(m entities.Matching)error {
 		return QuestionsInaccurate
 	} else {
 		for _, v := range cardQuestion { //loop through the map to check every key has a value
-			if v == nil {
+			if len(v.(string)) == 0 {
 				return InvalidQuestion
 
 			}
@@ -34,7 +33,7 @@ func ValidateMatching(m entities.Matching)error {
 		return UnacceptableFormat
 	} else {
 		for _, v := range cardOption {
-			if v == nil {
+			if len(v.(string)) == 0 {
 				return ErroneousOptions
 			}
 		}
@@ -43,7 +42,7 @@ func ValidateMatching(m entities.Matching)error {
 		return UnacceptableFormat
 	} else {
 		for k, v := range cardAnswer {
-			if v == nil {
+			if len(v.(string)) == 0 {
 				return FaultyAnswers
 			} else { //where my issue is with the interface to string
 				valStr := fmt.Sprint(v) //write the interface as a string
@@ -82,7 +81,7 @@ func ValidateMatching(m entities.Matching)error {
 	return nil
 }
 
-func ValidateTrueFalse(tf entities.TrueFalse)error {
+func ValidateTrueFalse(tf entities.TrueFalse) error {
 	cardType := strings.ToLower(tf.Type)
 	cardCategory := strings.ToLower(tf.Category)
 	cardQuestion := tf.Question
@@ -136,14 +135,14 @@ func ValidateMultiple(mu entities.Multiple) error {
 	if cardCategory != "golang" {
 		return InvalidCategory
 	}
-	if len(cardQuestion) == 0  {
+	if len(cardQuestion) == 0 {
 		return InvalidQuestion
 	}
 	if len(cardOption) == 0 {
 		return ErroneousOptions
 	} else {
 		for _, v := range cardOption {
-			if v == nil {
+			if len(v.(string)) == 0 {
 				return ErroneousOptions
 			}
 		}
@@ -154,7 +153,7 @@ func ValidateMultiple(mu entities.Multiple) error {
 		cardType := strings.ToLower(mu.Type)
 		cardCategory := strings.ToLower(mu.Category)
 		cardQuestion := mu.Question
-		cardOption :=mu.Options
+		cardOption := mu.Options
 		cardAnswer := mu.Answer
 
 		if cardType != "multiple" {
@@ -170,7 +169,7 @@ func ValidateMultiple(mu entities.Multiple) error {
 			return ErroneousOptions
 		} else {
 			for _, v := range cardOption {
-				if v == nil {
+				if len(v.(string)) == 0 {
 					return ErroneousOptions
 				}
 			}
@@ -199,7 +198,7 @@ func ValidateQandA(q entities.QandA) error {
 	if len(cardQuestion) == 0 {
 		return InvalidQuestion
 	}
-	if len(cardAnswer) == 0  {
+	if len(cardAnswer) == 0 {
 		return InvalidAnswer
 	}
 	return nil

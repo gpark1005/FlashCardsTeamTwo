@@ -56,7 +56,8 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			}
 			err = f.serv.CreateMatching(matchcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
 			w.Write([]byte("Card created"))
@@ -70,7 +71,8 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.CreateMultiple(multiplecard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
+				return
 			}
 
 			w.WriteHeader(http.StatusCreated)
@@ -85,7 +87,8 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.CreateTrueFalse(tfcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
 			w.Write([]byte("Card created"))
@@ -100,7 +103,8 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.CreateInfo(infocard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
 			w.Write([]byte("Card created"))
@@ -115,11 +119,16 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.CreateQandA(QandAcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
+				return
 			}
 			w.WriteHeader(http.StatusCreated)
 			w.Write([]byte("Card created"))
 			w.Header().Set("Content-Type", "application/json")
+		default:
+			http.Error(w, "invalid type", http.StatusUnprocessableEntity)
+			return
+
 		}
 
 	}
@@ -128,7 +137,8 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	allCards, err := f.serv.GetAll()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		errorHandlers(w, err)
+		return
 
 	}
 
@@ -150,7 +160,7 @@ func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 
 	card, err := f.serv.GetById(cardId)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		errorHandlers(w, err)
 		return
 	}
 
@@ -191,7 +201,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			}
 			err = f.serv.UpdateMatchingById(cardId, matchcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
 				return
 			}
 			w.WriteHeader(http.StatusCreated)
@@ -206,7 +216,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.UpdateMultipleById(cardId, multiplecard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
 				return
 			}
 
@@ -222,7 +232,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.UpdateTrueFalseById(cardId, tfcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
 				return
 			}
 			w.WriteHeader(http.StatusCreated)
@@ -238,7 +248,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.UpdateInfoById(cardId, infocard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
 				return
 			}
 			w.WriteHeader(http.StatusCreated)
@@ -254,12 +264,15 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 			err = f.serv.UpdateQandAById(cardId, QandAcard)
 			if err != nil {
-				http.Error(w, err.Error(), http.StatusBadRequest)
+				errorHandlers(w, err)
 				return
 			}
 			w.WriteHeader(http.StatusCreated)
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
+		default:
+			http.Error(w, "invalid type", http.StatusUnprocessableEntity)
+			return
 		}
 
 	}

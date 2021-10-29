@@ -3,7 +3,6 @@ package Repo
 import (
 	"encoding/json"
 	"io/ioutil"
-	"net/rpc"
 
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
@@ -21,20 +20,20 @@ func NewFlashcardRepo(filename string) flashcardRepo {
 func (r flashcardRepo) CreateMatching(card entities.Matching) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc.ServerError("unable to read info")
+		return ServerError
 	}
 
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
 	if err != nil {
-		return rpc.ServerError("card not created")
+		return ServerError
 	}
 
 	DbflashCardStruct.Matching = append(DbflashCardStruct.Matching, card)
 
 	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
 	if err != nil {
-		return rpc.ServerError("unable to save card")
+		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
@@ -44,20 +43,20 @@ func (r flashcardRepo) CreateMatching(card entities.Matching) error {
 func (r flashcardRepo) CreateTrueFalse(card entities.TrueFalse) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc.ServerError("unable to read info")
+		return ServerError
 	}
 
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
 	if err != nil {
-		return rpc.ServerError("card not created")
+		return ServerError
 	}
 
 	DbflashCardStruct.TrueFalse = append(DbflashCardStruct.TrueFalse, card)
 
 	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
 	if err != nil {
-		return rpc.ServerError("unable to save card")
+		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
@@ -67,20 +66,20 @@ func (r flashcardRepo) CreateTrueFalse(card entities.TrueFalse) error {
 func (r flashcardRepo) CreateMultiple(card entities.Multiple) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc.ServerError("unable to read info")
+		return ServerError
 	}
 
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
 	if err != nil {
-		return rpc.ServerError("card not created")
+		return ServerError
 	}
 
 	DbflashCardStruct.Multiple = append(DbflashCardStruct.Multiple, card)
 
 	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
 	if err != nil {
-		return rpc.ServerError("unable to save card")
+		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
@@ -91,20 +90,20 @@ func (r flashcardRepo) CreateInfo(card entities.Info) error {
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc.ServerError("unable to read info")
+		return ServerError
 	}
 
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
 	if err != nil {
-		return rpc.ServerError("card not created")
+		return ServerError
 	}
 
 	DbflashCardStruct.Info = append(DbflashCardStruct.Info, card)
 
 	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
 	if err != nil {
-		return rpc.ServerError("unable to save card")
+		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
@@ -114,19 +113,19 @@ func (r flashcardRepo) CreateInfo(card entities.Info) error {
 func (r flashcardRepo) CreateQandA(card entities.QandA) error {
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return rpc.ServerError("unable to read info")
+		return ServerError
 	}
 	DbflashCardStruct := entities.FlashCardStruct{}
 	err = json.Unmarshal(file, &DbflashCardStruct)
 	if err != nil {
-		return rpc.ServerError("unable to create card")
+		return ServerError
 	}
 
 	DbflashCardStruct.QandA = append(DbflashCardStruct.QandA, card)
 
 	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
 	if err != nil {
-		return rpc.ServerError("unable to save info")
+		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
@@ -139,12 +138,12 @@ func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return allCards, rpc.ServerError("unable to read info")
+		return allCards, ServerError
 	}
 
 	err = json.Unmarshal(file, &deck)
 	if err != nil {
-		return allCards, rpc.ServerError("unable to create deck")
+		return allCards, ServerError
 	}
 
 	allCards = append(allCards, deck)
@@ -159,12 +158,12 @@ func (r flashcardRepo) GetById(id string) (interface{}, error) {
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return returnDeck, err
+		return returnDeck, ServerError
 	}
 
 	err = json.Unmarshal(file, &deck)
 	if err != nil {
-		return returnDeck, err
+		return returnDeck, ServerError
 	}
 	returnDeck, err = IdCheck(id, deck)
 	if err != nil {
@@ -179,12 +178,12 @@ func (r flashcardRepo) UpdateMatchingById(id string, card entities.Matching) err
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	err = json.Unmarshal(file, &updatedCard)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	for i, v := range updatedCard.Matching {
@@ -220,12 +219,12 @@ func (r flashcardRepo) UpdateMultipleById(id string, card entities.Multiple) err
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	err = json.Unmarshal(file, &fc)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	for i, v := range fc.Multiple {
@@ -261,12 +260,12 @@ func (r flashcardRepo) UpdateInfoById(id string, card entities.Info) error {
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	err = json.Unmarshal(file, &fc)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	for i, v := range fc.Info {
@@ -300,12 +299,12 @@ func (r flashcardRepo) UpdateQandAById(id string, card entities.QandA) error {
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	err = json.Unmarshal(file, &fc)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	for i, v := range fc.QandA {
@@ -340,12 +339,12 @@ func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) e
 
 	file, err := ioutil.ReadFile(r.filename)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	err = json.Unmarshal(file, &fc)
 	if err != nil {
-		return err
+		return ServerError
 	}
 
 	for i, v := range fc.TrueFalse {
