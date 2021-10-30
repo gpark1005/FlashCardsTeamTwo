@@ -149,7 +149,12 @@ func (f FlashcardService) UpdateQandAById(id string, card entities.QandA) error 
 }
 
 func (f FlashcardService)DeleteById(id string) error {
+	if len(id) == 0 {
+		return InvalidId
+	}
+
 	err := f.Repo.DeleteById(id)
+
 	if err != nil {
 		return err
 	}

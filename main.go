@@ -1,4 +1,4 @@
-package main 
+package main
 
 import (
 	"fmt"
@@ -15,7 +15,6 @@ import (
 	//"github.com/gpark1005/FlashCardsTeamTwo/entities"
 	//"github.com/gpark1005/FlashCardsTeamTwo/handler"
 )
-
 
 func main() {
 
@@ -43,5 +42,3 @@ func main() {
 	log.Fatal(server.ListenAndServe())
 
 }
-
-

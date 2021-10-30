@@ -165,6 +165,7 @@ func (r flashcardRepo) GetById(id string) (interface{}, error) {
 	if err != nil {
 		return returnDeck, ServerError
 	}
+
 	returnDeck, err = IdCheck(id, deck)
 	if err != nil {
 		return returnDeck, NotFound
@@ -374,17 +375,55 @@ func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) e
 
 }
 
-//func (r flashcardRepo)DeleteById(id string)error {
-//	deck := entities.FlashCardStruct{}
-//
-//	file, err := ioutil.ReadFile(r.filename) // reads moviedb.json file
-//	if err != nil {
-//		fmt.Println(err) // checks for errors
-//	}
-//
-//	err = json.Unmarshal(file, &deck) // convert to Go
-//	if err != nil {
-//		return err
-//	}
-//
-//}
+func (r flashcardRepo)DeleteById(id string) error {
+	deck := entities.FlashCardStruct{}
+
+	file, err := ioutil.ReadFile(r.filename) // reads flashcard database
+	if err != nil {
+		return err                        // checks for errors
+	}
+
+	err = json.Unmarshal(file, &deck)    // convert to Go
+	if err != nil {
+		return err
+	}
+
+	index, cardType, err := DeleteCheck(id, deck)
+	if err != nil {
+		return err
+	}
+
+	switch cardType{
+
+	case "Matching" : 
+		deck.Matching = append(deck.Matching[:index], deck.Matching[index+1:]...)
+	
+	case "TrueFalse" : 
+		deck.TrueFalse = append(deck.TrueFalse[:index], deck.TrueFalse[index+1:]...)
+
+	case "Info" : 
+		deck.Info = append(deck.Info[:index], deck.Info[index+1:]...)
+
+	case "Multiple" : 
+		deck.Multiple = append(deck.Multiple[:index], deck.Multiple[index+1:]...)	
+
+	case "QandA" : 
+		deck.QandA = append(deck.QandA[:index], deck.QandA[index+1:]...)	
+		
+	}
+
+
+
+	result, err := json.MarshalIndent(&deck, "", " ")
+		if err != nil {
+			return ServerError
+		}
+
+	err = ioutil.WriteFile(r.filename, result, 0644)
+		if err != nil {
+			return ServerError
+		}
+
+   return nil 
+
+}

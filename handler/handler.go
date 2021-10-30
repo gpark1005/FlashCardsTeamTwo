@@ -287,9 +287,12 @@ func (f FlashcardHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
 	err := f.serv.DeleteById(id)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		errorHandlers(w, err) 
+		return
 	}
 
+
+	w.Write([]byte("card deleted"))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
