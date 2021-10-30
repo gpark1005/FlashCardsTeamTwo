@@ -21,26 +21,6 @@
    }
   },
   {
-   "Id": "b8bed058-2865-4bb8-9c9e-b013213c0ff7",
-   "Type": "Matching",
-   "Category": "Golang",
-   "Question": {
-    "A": "this is a questions",
-    "B": "this is something else",
-    "C": "define this .."
-   },
-   "Options": {
-    "1": "checking",
-    "2": "the",
-    "3": "writer error"
-   },
-   "Answer": {
-    "A": "2",
-    "B": "3",
-    "C": "1"
-   }
-  },
-  {
    "Id": "728b009f-0ce5-40f7-a70d-ec6620ecba91",
    "Type": "Matching",
    "Category": "Golang",
@@ -122,14 +102,34 @@
     "B": "3",
     "C": "1"
    }
+  },
+  {
+   "Id": "b8bed058-2865-4bb8-9c9e-b013213c0ff7",
+   "Type": "Matching",
+   "Category": "Golang",
+   "Question": {
+    "A": "this is a trial run ",
+    "B": "this will check the put request",
+    "C": "define this .."
+   },
+   "Options": {
+    "1": "checking",
+    "2": "for",
+    "3": "update error"
+   },
+   "Answer": {
+    "A": "3",
+    "B": "1",
+    "C": "2"
+   }
   }
  ],
  "TrueFalse": [
   {
    "Id": "b4f06c58-ca1d-4497-9175-ce6bdb3265f2",
    "Type": "TrueFalse",
-   "Category": "Golang",
-   "Question": "Do you know?",
+   "Category": "golang",
+   "Question": "this is a question",
    "Answer": "true"
   }
  ],
@@ -138,14 +138,15 @@
    "Id": "5734d5ed-ed34-44e1-a4e6-47f039a2df87",
    "Type": "Multiple",
    "Category": "Golang",
-   "Question": "what is today?",
+   "Question": "what is this? ,what else can i try?",
    "Options": {
     "1": "jfebkufhekhfneik",
     "2": "jefkjflkfjfkledl",
     "3": "hfskehjkfjek",
-    "4": "fhjksfklejd"
+    "4": "fhjksfklejd",
+    "5": "this is a test"
    },
-   "Answer": "4"
+   "Answer": "5"
   }
  ],
  "Info": [
@@ -153,7 +154,7 @@
    "Id": "1e1ac3a1-dfda-4927-a36f-18e2f9f74007",
    "Type": "Info",
    "Category": "Golang",
-   "Details": "Fast compiler"
+   "Details": "simplicity at best"
   }
  ],
  "QandA": [
