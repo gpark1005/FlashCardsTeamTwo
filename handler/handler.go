@@ -23,6 +23,7 @@ type IFlashcardService interface {
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
 	UpdateQandAById(string, entities.QandA) error
+	DeleteById(id string) error
 }
 
 type FlashcardHandler struct {
@@ -278,3 +279,19 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func (f FlashcardHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["Id"]
+
+	err := f.serv.DeleteById(id)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+}
+

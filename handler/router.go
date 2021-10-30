@@ -11,6 +11,7 @@ func ConfigureRouter(fc FlashcardHandler) *mux.Router {
 	r.HandleFunc("/flashcard", fc.GetAll).Methods("GET")
 	r.HandleFunc("/flashcard/{Id}", fc.GetById).Methods("GET")
 	r.HandleFunc("/flashcard/{Id}", fc.UpdateById).Methods("PUT")
+	r.HandleFunc("/flashcard/{Id}", fc.DeleteById).Methods("DELETE")
 
 	return r
 

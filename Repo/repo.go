@@ -373,3 +373,18 @@ func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) e
 	return NotFound
 
 }
+
+//func (r flashcardRepo)DeleteById(id string)error {
+//	deck := entities.FlashCardStruct{}
+//
+//	file, err := ioutil.ReadFile(r.filename) // reads moviedb.json file
+//	if err != nil {
+//		fmt.Println(err) // checks for errors
+//	}
+//
+//	err = json.Unmarshal(file, &deck) // convert to Go
+//	if err != nil {
+//		return err
+//	}
+//
+//}

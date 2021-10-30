@@ -17,6 +17,7 @@ type IFlashcardRepo interface {
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
 	UpdateQandAById(string, entities.QandA) error
+	DeleteById(id string)error
 }
 
 type FlashcardService struct {
@@ -147,6 +148,12 @@ func (f FlashcardService) UpdateQandAById(id string, card entities.QandA) error 
 
 }
 
-
+func (f FlashcardService)DeleteById(id string) error {
+	err := f.Repo.DeleteById(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 
