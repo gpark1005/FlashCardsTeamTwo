@@ -294,7 +294,7 @@ func (f FlashcardHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte("card deleted"))
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	
 
 }
 
