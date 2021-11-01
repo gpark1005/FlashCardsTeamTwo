@@ -1,18 +1,18 @@
 {
  "Matching": [
   {
-   "Id": "430dc908-aa88-4548-9a2c-b78b4de504c1",
+   "Id": "b74ff1d4-e27e-4eb2-9ca6-6743d9b6dbbe",
    "Type": "Matching",
    "Category": "Golang",
    "Question": {
-    "A": "",
-    "B": "this is something else",
-    "C": "define this .."
+    "A": "A collection of variable-length elements that all share the same type",
+    "B": "A numbered sequence of elements of a specific length",
+    "C": "A composite type that stores a collection of data where each value is accessed via a key"
    },
    "Options": {
-    "1": "a container to hold value",
-    "2": "to allow repetitive code to be used throughout the project",
-    "3": "to allow change to the memory addres"
+    "1": "map",
+    "2": "slice",
+    "3": "array"
    },
    "Answer": {
     "A": "2",
@@ -21,18 +21,18 @@
    }
   },
   {
-   "Id": "33e8a9fa-3082-40e4-9f55-a91579f73cde",
+   "Id": "a421e644-c497-4937-ab0e-1418d9ea3c60",
    "Type": "Matching",
    "Category": "Golang",
    "Question": {
-    "A": "",
-    "B": "",
-    "C": "define this .."
+    "A": "In Go, how do we refer to a slice of bytes?",
+    "B": "Bytes, runes, ints, uints, and floats are all what kind of built-in type?",
+    "C": "What built-in type represents true or false?"
    },
    "Options": {
-    "1": "a container to hold value",
-    "2": "to allow repetitive code to be used throughout the project",
-    "3": "to allow change to the memory addres"
+    "1": "boolean",
+    "2": "a string",
+    "3": "Numeric"
    },
    "Answer": {
     "A": "2",
@@ -41,57 +41,158 @@
    }
   },
   {
-   "Id": "b8bed058-2865-4bb8-9c9e-b013213c0ff7",
+   "Id": "53485853-01dc-486c-a3d0-a73e876c3067",
    "Type": "Matching",
    "Category": "Golang",
    "Question": {
-    "A": "this is a trial run ",
-    "B": "this will check the put request",
-    "C": "define this .."
+    "A": "What keyword declares a function?",
+    "B": "What is a variable local to a function whose value is set when the function is called?",
+    "C": "A ______ ______ follows the parameters in the function declaration,and must be followed by the return keyword in the function block"
    },
    "Options": {
-    "1": "checking",
-    "2": "for",
-    "3": "update error"
+    "1": "func",
+    "2": "return value",
+    "3": "parameter"
    },
    "Answer": {
-    "A": "3",
-    "B": "1",
+    "A": "1",
+    "B": "3",
     "C": "2"
+   }
+  },
+  {
+   "Id": "25d3968b-f0d2-4767-9de9-100c0551d58a",
+   "Type": "Matching",
+   "Category": "Golang",
+   "Question": {
+    "A": "Go provides the ______ to tell the difference between a key that's associated with a zero value and a key that's not in a map",
+    "B": "What is a user-defined type that represents a collection of fields?",
+    "C": "How would you access individual fields of a struct? "
+   },
+   "Options": {
+    "1": "struct",
+    "2": "comma ok idiom",
+    "3": "the dot operator"
+   },
+   "Answer": {
+    "A": "2",
+    "B": "1",
+    "C": "3"
    }
   }
  ],
  "TrueFalse": [
   {
-   "Id": "b4f06c58-ca1d-4497-9175-ce6bdb3265f2",
+   "Id": "20592e34-f502-438b-a37c-612cfbff0af9",
    "Type": "TrueFalse",
    "Category": "golang",
-   "Question": "this is a question",
+   "Question": "The parameters and return type are optional in a function.",
+   "Answer": "true"
+  },
+  {
+   "Id": "7eb0b53c-3a8b-4dc0-b060-5af3211c1c45",
+   "Type": "TrueFalse",
+   "Category": "golang",
+   "Question": "When a struct is defined and it is not explicitly initialized with any value, the fields of the struct are assigned their zero values by default.",
+   "Answer": "true"
+  },
+  {
+   "Id": "6c850991-83c9-4e76-a113-3f435b6313ca",
+   "Type": "TrueFalse",
+   "Category": "golang",
+   "Question": "The size of the array is not a part of the type. This makes them exactly like a slice.",
+   "Answer": "false"
+  },
+  {
+   "Id": "31267026-5b5c-41e1-bbd4-98e413a01f2c",
+   "Type": "TrueFalse",
+   "Category": "golang",
+   "Question": "There is not traditional inheritance in Go. Interfaces and structs are utilized for embedding that enables polymorphism",
    "Answer": "true"
   }
  ],
  "Multiple": [
   {
-   "Id": "5734d5ed-ed34-44e1-a4e6-47f039a2df87",
+   "Id": "29fb5935-d924-47a4-87b6-0d24041a12d7",
    "Type": "Multiple",
    "Category": "Golang",
-   "Question": "what is this? ,what else can i try?",
+   "Question": "What is a function?",
    "Options": {
-    "1": "jfebkufhekhfneik",
-    "2": "jefkjflkfjfkledl",
-    "3": "hfskehjkfjek",
-    "4": "fhjksfklejd",
-    "5": "this is a test"
+    "1": "A block of code that performs a specific task; takes an input, performs some calculations on the input, and generates an output.",
+    "2": "A set of method signatures. ",
+    "3": "A built-in type that you call by writing 'func' first",
+    "4": "An office party where you leave before 9pm with a coozy and a headache",
+    "5": "A block of code that uses if/else statements to act as control flow"
+   },
+   "Answer": "1"
+  },
+  {
+   "Id": "b050fb47-86f3-4f5b-9b89-e95b3750d6a8",
+   "Type": "Multiple",
+   "Category": "Golang",
+   "Question": "What are variables?",
+   "Options": {
+    "1": "a slice of bytes enclosed by quotation marks",
+    "2": " an array literal without the length",
+    "3": "Name given to a memory location to store a value of a specific type.",
+    "4": "The number of elements a slice contains",
+    "5": "The key word to iterate over a slice or a map"
+   },
+   "Answer": "3"
+  },
+  {
+   "Id": "41bf3973-9d07-49b0-ab3c-a94f03fc9d93",
+   "Type": "Multiple",
+   "Category": "Golang",
+   "Question": "What is a pointer?",
+   "Options": {
+    "1": "the finger between the thumb and the middle",
+    "2": "A method is just a function with a special receiver type",
+    "3": "a data type that points to where a function is being called",
+    "4": "an ampersand",
+    "5": "A variable that holds the location in memory where a value is stored."
    },
    "Answer": "5"
+  },
+  {
+   "Id": "4d450763-76fb-4ea6-867c-4d61a0af19c7",
+   "Type": "Multiple",
+   "Category": "Golang",
+   "Question": "How would you deference a value?",
+   "Options": {
+    "1": "the \u0026\u0026 operator",
+    "2": "the || operator",
+    "3": "the == operator",
+    "4": "the * operator",
+    "5": "the % operator"
+   },
+   "Answer": "4"
   }
  ],
  "Info": [
   {
-   "Id": "1e1ac3a1-dfda-4927-a36f-18e2f9f74007",
+   "Id": "4bcbb10d-098a-4d88-8338-30805f4df0dd",
    "Type": "Info",
    "Category": "Golang",
-   "Details": "simplicity at best"
+   "Details": "A method is just a function with a special receiver type between the func keyword and the method name. The receiver can either be a struct type or non-struct type"
+  },
+  {
+   "Id": "ef35357f-befa-4fba-822f-937651c3d418",
+   "Type": "Info",
+   "Category": "Golang",
+   "Details": "To write unit tests in GoLang, you need to import the testing package, the filename must end with _test, and the command to be used is go test in the CLI. It will test all the files set up as test files and return the output in the terminal."
+  },
+  {
+   "Id": "8aa22dbd-6593-4d9b-bb16-75ff50ffe25e",
+   "Type": "Info",
+   "Category": "Golang",
+   "Details": "In Go, an interface is a set of method signatures. When a type provides definition for all the methods in the interface, it is said to implement the interface. It is much similar to the OOP world. Interface specifies what methods a type should have and the type decides how to implement these methods."
+  },
+  {
+   "Id": "f2885b86-b26a-4145-aecf-0b9876765569",
+   "Type": "Info",
+   "Category": "Golang",
+   "Details": "Go provides a built-in append function to append new elements to a slice."
   }
  ],
  "QandA": [
