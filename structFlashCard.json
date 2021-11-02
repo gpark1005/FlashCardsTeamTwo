@@ -197,39 +197,32 @@
  ],
  "QandA": [
   {
-   "Id": "54c835f0-9085-4af6-877c-a3ecbf05911a",
+   "Id": "ba37d8bd-28a8-4640-aec5-41f229703903",
    "Type": "QandA",
    "Category": "Golang",
-   "Question": "When would you implement the built-in delete function?",
-   "Answer": "When you want to delete an element from a given map associated with the provided key."
+   "Question": "What is a variable?",
+   "Answer": "a piece of storage containing a value. "
   },
   {
-   "Id": "3c08d83f-25de-4568-9d98-79e8d66bb6e6",
+   "Id": "efefb5bc-b654-48b0-9936-3b85094294ec",
    "Type": "QandA",
    "Category": "Golang",
-   "Question": "How do you explicitly declare a variable in Go?",
-   "Answer": "The var statement declares a list of variables explicitly."
+   "Question": "What is the Println function used for?",
+   "Answer": "to see what your program is doing. Any arguments you pass will be printed in your terminal. "
   },
   {
-   "Id": "7ca5760e-e198-4307-88c2-1f014060cb7d",
+   "Id": "66edfaa9-2055-4551-b056-5c06183b28c6",
    "Type": "QandA",
    "Category": "Golang",
-   "Question": "Which SOLID Go design principle suggests 'Do one thing and do it well'? ",
-   "Answer": "Single responsibility principle"
+   "Question": "What are methods?",
+   "Answer": "Methods are functions that are associated with values of a particular type."
   },
   {
-   "Id": "cf4751c1-1658-45d6-8704-e529d037d8d4",
+   "Id": "f3c036bd-c36e-4fa0-b86d-6e061ebd2e2c",
    "Type": "QandA",
    "Category": "Golang",
-   "Question": "For is the only loop available in Go. TWhat are the 3 components of a for loop that can be used?",
-   "Answer": "Initialization, condition, post statement"
-  },
-  {
-   "Id": "c49e4428-d3cc-4acb-b1a3-1517158d677b",
-   "Type": "QandA",
-   "Category": "Golang",
-   "Question": "What is the default zero value of an interface?",
-   "Answer": "The zero value of a interface is nil. A nil interface has both its underlying value and as well as concrete type as nil."
+   "Question": "What are the benefits to using loops?",
+   "Answer": "to execute a block of code repeatedly."
   }
  ]
 }

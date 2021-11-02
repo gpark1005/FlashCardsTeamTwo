@@ -183,13 +183,13 @@ func ValidateMultiple(mu entities.Multiple) error {
 	return nil
 }
 
-func ValidateQnA(q entities.QnA) error {
+func ValidateQandA(q entities.QandA) error {
 	cardType := strings.ToLower(q.Type)
 	cardCategory := strings.ToLower(q.Category)
 	cardQuestion := q.Question
 	cardAnswer := q.Answer
 
-	if cardType != "qna" {
+	if cardType != "qanda" {
 		return InvalidType
 	}
 	if cardCategory != "golang" {

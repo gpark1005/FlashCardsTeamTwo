@@ -15,22 +15,22 @@ type IFlashCardService interface {
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
-	CreateQnA(entities.QnA) error
+	CreateQandA(a entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
 	GetById(string) (interface{}, error)
 	UpdateMatchingById(string, entities.Matching) error
 	UpdateMultipleById(string, entities.Multiple) error
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
-	UpdateQnAById(string, entities.QnA) error
-	DeleteById(id string) error
+	UpdateQandAById(string, entities.QandA) error
+	DeleteById(string) error
 }
 
 type FlashCardHandler struct {
 	serv IFlashCardService
 }
 
-func NewFlashcardHandler(f IFlashCardService) FlashCardHandler {
+func NewFlashCardHandler(f IFlashCardService) FlashCardHandler {
 	return FlashCardHandler{
 		serv: f,
 	}
@@ -111,14 +111,14 @@ func (f FlashCardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card created"))
 			w.Header().Set("Content-Type", "application/json")
 
-		case "QnA":
-			QnACard := entities.QnA{}
-			err := json.Unmarshal(file, &QnACard)
+		case "QandA":
+			QandACard := entities.QandA{}
+			err := json.Unmarshal(file, &QandACard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.CreateQnA(QnACard)
+			err = f.serv.CreateQandA(QandACard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -256,14 +256,14 @@ func (f FlashCardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 
-		case "QnA":
-			QnACard := entities.QnA{}
-			err := json.Unmarshal(file, &QnACard)
+		case "QandA":
+			QandACard := entities.QandA{}
+			err := json.Unmarshal(file, &QandACard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateQnAById(cardId, QnACard)
+			err = f.serv.UpdateQandAById(cardId, QandACard)
 			if err != nil {
 				errorHandlers(w, err)
 				return

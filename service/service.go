@@ -9,14 +9,14 @@ type IFlashCardRepo interface {
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
-	CreateQnA(entities.QnA) error
+	CreateQandA(entities.QandA) error
 	GetAll() ([]entities.FlashCardStruct, error)
 	GetById(string) (interface{}, error)
 	UpdateMatchingById(string,entities.Matching)error
 	UpdateMultipleById(string, entities.Multiple) error
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
-	UpdateQnAById(string, entities.QnA) error
+	UpdateQandAById(string, entities.QandA) error
 	DeleteById(id string)error
 }
 
@@ -70,13 +70,13 @@ func (f FlashCardService) CreateMultiple(card entities.Multiple) error {
 
 }
 
-func (f FlashCardService) CreateQnA(card entities.QnA) error {
-	card.SetQnAId()
-	err := ValidateQnA(card)
+func (f FlashCardService) CreateQandA(card entities.QandA) error {
+	card.SetQandAId()
+	err := ValidateQandA(card)
 	if err != nil {
 		return err
 	}
-	return f.Repo.CreateQnA(card)
+	return f.Repo.CreateQandA(card)
 
 }
 
@@ -138,13 +138,13 @@ func (f FlashCardService) UpdateMultipleById(id string, card entities.Multiple) 
 
 }
 
-func (f FlashCardService) UpdateQnAById(id string, card entities.QnA) error {
-	card.SetQnAId()
-	err := ValidateQnA(card)
+func (f FlashCardService) UpdateQandAById(id string, card entities.QandA) error {
+	card.SetQandAId()
+	err := ValidateQandA(card)
 	if err != nil {
 		return err
 	}
-	return f.Repo.UpdateQnAById(id, card)
+	return f.Repo.UpdateQandAById(id, card)
 
 }
 

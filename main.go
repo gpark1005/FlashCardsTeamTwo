@@ -28,7 +28,7 @@ func main() {
 
 	Repo := Repo.NewFlashcardRepo(filename)
 	serv := service.NewFlashcardService(Repo)
-	handle := handler.NewFlashcardHandler(serv)
+	handle := handler.NewFlashCardHandler(serv)
 
 	router := handler.ConfigureRouter(handle)
 

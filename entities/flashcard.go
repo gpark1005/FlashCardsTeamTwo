@@ -7,7 +7,7 @@ type FlashCardStruct struct {
 	TrueFalse []TrueFalse
 	Multiple  []Multiple
 	Info      []Info
-	QnA     []QnA
+	QandA     []QandA
 }
 
 type Matching struct {
@@ -43,7 +43,7 @@ type Info struct {
 	Details  string
 }
 
-type QnA struct {
+type QandA struct {
 	Id       string
 	Type     string
 	Category string
@@ -67,6 +67,6 @@ func (f *Info) SetInfoId() {
 	f.Id = uuid.New().String()
 }
 
-func (f *QnA) SetQnAId() {
+func (f *QandA) SetQandAId() {
 	f.Id = uuid.New().String()
 }

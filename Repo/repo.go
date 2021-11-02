@@ -418,8 +418,8 @@ func (r flashCardRepo)DeleteById(id string) error {
 	case "Multiple" : 
 		deck.Multiple = append(deck.Multiple[:index], deck.Multiple[index+1:]...)	
 
-	case "QandA" : 
-		deck.QandA = append(deck.QandA[:index], deck.QandA[index+1:]...)	
+	case "QandA" :
+		deck.QandA = append(deck.QandA[:index], deck.QandA[index+1:]...)
 		
 	}
 
