@@ -4,33 +4,33 @@ import (
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
-type IFlashcardRepo interface {
+type IFlashCardRepo interface {
 	CreateMatching(entities.Matching) error
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
-	CreateQandA(entities.QandA) error
+	CreateQnA(entities.QnA) error
 	GetAll() ([]entities.FlashCardStruct, error)
 	GetById(string) (interface{}, error)
 	UpdateMatchingById(string,entities.Matching)error
 	UpdateMultipleById(string, entities.Multiple) error
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
-	UpdateQandAById(string, entities.QandA) error
+	UpdateQnAById(string, entities.QnA) error
 	DeleteById(id string)error
 }
 
-type FlashcardService struct {
-	Repo IFlashcardRepo
+type FlashCardService struct {
+	Repo IFlashCardRepo
 }
 
-func NewFlashcardService(f IFlashcardRepo) FlashcardService {
-	return FlashcardService{
+func NewFlashcardService(f IFlashCardRepo) FlashCardService {
+	return FlashCardService{
 		Repo: f,
 	}
 }
 
-func (f FlashcardService) CreateMatching(card entities.Matching) error {
+func (f FlashCardService) CreateMatching(card entities.Matching) error {
 	card.SetMatchingId()
 	err := ValidateMatching(card)
 	if err != nil {
@@ -40,7 +40,7 @@ func (f FlashcardService) CreateMatching(card entities.Matching) error {
 
 }
 
-func (f FlashcardService) CreateTrueFalse(card entities.TrueFalse) error {
+func (f FlashCardService) CreateTrueFalse(card entities.TrueFalse) error {
 	card.SetTrueFalseId()
 	err := ValidateTrueFalse(card)
 	if err != nil {
@@ -50,7 +50,7 @@ func (f FlashcardService) CreateTrueFalse(card entities.TrueFalse) error {
 
 }
 
-func (f FlashcardService) CreateInfo(card entities.Info) error {
+func (f FlashCardService) CreateInfo(card entities.Info) error {
 	card.SetInfoId()
 	err := ValidateInfo(card)
 	if err != nil {
@@ -60,7 +60,7 @@ func (f FlashcardService) CreateInfo(card entities.Info) error {
 
 }
 
-func (f FlashcardService) CreateMultiple(card entities.Multiple) error {
+func (f FlashCardService) CreateMultiple(card entities.Multiple) error {
 	card.SetMultipleId()
 	err := ValidateMultiple(card)
 	if err != nil {
@@ -70,17 +70,17 @@ func (f FlashcardService) CreateMultiple(card entities.Multiple) error {
 
 }
 
-func (f FlashcardService) CreateQandA(card entities.QandA) error {
-	card.SetQandAId()
-	err := ValidateQandA(card)
+func (f FlashCardService) CreateQnA(card entities.QnA) error {
+	card.SetQnAId()
+	err := ValidateQnA(card)
 	if err != nil {
 		return err
 	}
-	return f.Repo.CreateQandA(card)
+	return f.Repo.CreateQnA(card)
 
 }
 
-func (f FlashcardService) GetAll() ([]entities.FlashCardStruct, error) {
+func (f FlashCardService) GetAll() ([]entities.FlashCardStruct, error) {
 	allCards, err := f.Repo.GetAll()
 	if err != nil {
 		return allCards, BadRequest
@@ -90,7 +90,7 @@ func (f FlashcardService) GetAll() ([]entities.FlashCardStruct, error) {
 
 }
 
-func (f FlashcardService) GetById(id string) (interface{}, error) {
+func (f FlashCardService) GetById(id string) (interface{}, error) {
 	deck := entities.FlashCardStruct{}
 	if len(id) == 0 {
 		return deck, InvalidId
@@ -98,7 +98,7 @@ func (f FlashcardService) GetById(id string) (interface{}, error) {
 	return f.Repo.GetById(id)
 }
 
-func (f FlashcardService) UpdateMatchingById(id string,card entities.Matching)error {
+func (f FlashCardService) UpdateMatchingById(id string,card entities.Matching)error {
 	card.SetMatchingId()
 	err := ValidateMatching(card)
 	if err != nil {
@@ -108,7 +108,7 @@ func (f FlashcardService) UpdateMatchingById(id string,card entities.Matching)er
 
 }
 
-func (f FlashcardService) UpdateTrueFalseById(id string,card entities.TrueFalse)error {
+func (f FlashCardService) UpdateTrueFalseById(id string,card entities.TrueFalse)error {
 	card.SetTrueFalseId()
 	err := ValidateTrueFalse(card)
 	if err != nil {
@@ -118,7 +118,7 @@ func (f FlashcardService) UpdateTrueFalseById(id string,card entities.TrueFalse)
 
 }
 
-func (f FlashcardService) UpdateInfoById(id string, card entities.Info) error {
+func (f FlashCardService) UpdateInfoById(id string, card entities.Info) error {
 	card.SetInfoId()
 	err := ValidateInfo(card)
 	if err != nil {
@@ -128,7 +128,7 @@ func (f FlashcardService) UpdateInfoById(id string, card entities.Info) error {
 
 }
 
-func (f FlashcardService) UpdateMultipleById(id string, card entities.Multiple) error {
+func (f FlashCardService) UpdateMultipleById(id string, card entities.Multiple) error {
 	card.SetMultipleId()
 	err := ValidateMultiple(card)
 	if err != nil {
@@ -138,17 +138,17 @@ func (f FlashcardService) UpdateMultipleById(id string, card entities.Multiple) 
 
 }
 
-func (f FlashcardService) UpdateQandAById(id string, card entities.QandA) error {
-	card.SetQandAId()
-	err := ValidateQandA(card)
+func (f FlashCardService) UpdateQnAById(id string, card entities.QnA) error {
+	card.SetQnAId()
+	err := ValidateQnA(card)
 	if err != nil {
 		return err
 	}
-	return f.Repo.UpdateQandAById(id, card)
+	return f.Repo.UpdateQnAById(id, card)
 
 }
 
-func (f FlashcardService)DeleteById(id string) error {
+func (f FlashCardService)DeleteById(id string) error {
 	if len(id) == 0 {
 		return InvalidId
 	}

@@ -7,146 +7,147 @@ import (
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
-type flashcardRepo struct {
-	filename string
+type flashCardRepo struct {
+	fileName string
 }
 
-func NewFlashcardRepo(filename string) flashcardRepo {
-	return flashcardRepo{
-		filename: filename,
+func NewFlashcardRepo(filename string) flashCardRepo {
+	return flashCardRepo{
+		fileName: filename,
 	}
 }
 
-func (r flashcardRepo) CreateMatching(card entities.Matching) error {
-	file, err := ioutil.ReadFile(r.filename)
+func (r flashCardRepo) CreateMatching(card entities.Matching) error {
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
 
-	DbflashCardStruct := entities.FlashCardStruct{}
-	err = json.Unmarshal(file, &DbflashCardStruct)
+	dbFlashCardStruct := entities.FlashCardStruct{}
+	err = json.Unmarshal(file, &dbFlashCardStruct)
 	if err != nil {
 		return ConversionError
 	}
 
-	DbflashCardStruct.Matching = append(DbflashCardStruct.Matching, card)
+	dbFlashCardStruct.Matching = append(dbFlashCardStruct.Matching, card)
 
-	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
+	Marshaled, err := json.MarshalIndent(&dbFlashCardStruct, "", " ")
 	if err != nil {
 		return ConversionError
 	}
-	err = ioutil.WriteFile(r.filename, Marshaled, 0644)
+	err = ioutil.WriteFile(r.fileName, Marshaled, 0644)
 	if err != nil {
 		return StorageError
 	}
 	return nil
 }
 
-func (r flashcardRepo) CreateTrueFalse(card entities.TrueFalse) error {
-	file, err := ioutil.ReadFile(r.filename)
+func (r flashCardRepo) CreateTrueFalse(card entities.TrueFalse) error {
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
 
-	DbflashCardStruct := entities.FlashCardStruct{}
-	err = json.Unmarshal(file, &DbflashCardStruct)
+	dbFlashCardStruct := entities.FlashCardStruct{}
+	err = json.Unmarshal(file, &dbFlashCardStruct)
 	if err != nil {
 		return ConversionError
 	}
 
-	DbflashCardStruct.TrueFalse = append(DbflashCardStruct.TrueFalse, card)
+	dbFlashCardStruct.TrueFalse = append(dbFlashCardStruct.TrueFalse, card)
 
-	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
+	Marshaled, err := json.MarshalIndent(&dbFlashCardStruct, "", " ")
 	if err != nil {
 		return ConversionError
 	}
-	err = ioutil.WriteFile(r.filename, Marshaled, 0644)
+	err = ioutil.WriteFile(r.fileName, Marshaled, 0644)
 	if err != nil{
 		return StorageError
 	}
 	return nil
 }
 
-func (r flashcardRepo) CreateMultiple(card entities.Multiple) error {
-	file, err := ioutil.ReadFile(r.filename)
+func (r flashCardRepo) CreateMultiple(card entities.Multiple) error {
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
 
-	DbflashCardStruct := entities.FlashCardStruct{}
-	err = json.Unmarshal(file, &DbflashCardStruct)
+	dbFlashCardStruct := entities.FlashCardStruct{}
+	err = json.Unmarshal(file, &dbFlashCardStruct)
 	if err != nil {
 		return ConversionError
 	}
 
-	DbflashCardStruct.Multiple = append(DbflashCardStruct.Multiple, card)
+	dbFlashCardStruct.Multiple = append(dbFlashCardStruct.Multiple, card)
 
-	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
+	Marshaled, err := json.MarshalIndent(&dbFlashCardStruct, "", " ")
 	if err != nil {
 		return ConversionError
 	}
-	err = ioutil.WriteFile(r.filename, Marshaled, 0644)
+	err = ioutil.WriteFile(r.fileName, Marshaled, 0644)
 	if err != nil{
 		return StorageError
 	}
 	return nil
 }
 
-func (r flashcardRepo) CreateInfo(card entities.Info) error {
+func (r flashCardRepo) CreateInfo(card entities.Info) error {
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
 
-	DbflashCardStruct := entities.FlashCardStruct{}
-	err = json.Unmarshal(file, &DbflashCardStruct)
+	dbFlashCardStruct := entities.FlashCardStruct{}
+	err = json.Unmarshal(file, &dbFlashCardStruct)
 	if err != nil {
 		return ConversionError
 	}
 
-	DbflashCardStruct.Info = append(DbflashCardStruct.Info, card)
+	dbFlashCardStruct.Info = append(dbFlashCardStruct.Info, card)
 
-	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
+	Marshaled, err := json.MarshalIndent(&dbFlashCardStruct, "", " ")
 	if err != nil {
 		return ConversionError
 	}
-	err = ioutil.WriteFile(r.filename, Marshaled, 0644)
+	err = ioutil.WriteFile(r.fileName, Marshaled, 0644)
 	if err != nil{
 		return StorageError
 	}
 	return nil
 }
 
-func (r flashcardRepo) CreateQandA(card entities.QandA) error {
-	file, err := ioutil.ReadFile(r.filename)
+func (r flashCardRepo) CreateQandA(card entities.QandA) error {
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
-	DbflashCardStruct := entities.FlashCardStruct{}
-	err = json.Unmarshal(file, &DbflashCardStruct)
+
+	dbFlashCardStruct := entities.FlashCardStruct{}
+	err = json.Unmarshal(file, &dbFlashCardStruct)
 	if err != nil {
 		return ConversionError
 	}
 
-	DbflashCardStruct.QandA = append(DbflashCardStruct.QandA, card)
+	dbFlashCardStruct.QandA = append(dbFlashCardStruct.QandA, card)
 
-	Marshaled, err := json.MarshalIndent(&DbflashCardStruct, "", " ")
+	Marshaled, err := json.MarshalIndent(&dbFlashCardStruct, "", " ")
 	if err != nil {
 		return ConversionError
 	}
-	err = ioutil.WriteFile(r.filename, Marshaled, 0644)
+	err = ioutil.WriteFile(r.fileName, Marshaled, 0644)
 	if err != nil{
 		return StorageError
 	}
 	return nil
 }
 
-func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
+func (r flashCardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 	deck := entities.FlashCardStruct{}
 	allCards := []entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return allCards, FileError
 	}
@@ -162,32 +163,32 @@ func (r flashcardRepo) GetAll() ([]entities.FlashCardStruct, error) {
 
 }
 
-func (r flashcardRepo) GetById(id string) (interface{}, error) {
+func (r flashCardRepo) GetById(id string) (interface{}, error) {
 	deck := entities.FlashCardStruct{}
-	var returnDeck interface{}
+	var cardFound interface{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
-		return returnDeck, FileError
+		return cardFound, FileError
 	}
 
 	err = json.Unmarshal(file, &deck)
 	if err != nil {
-		return returnDeck, ConversionError
+		return cardFound, ConversionError
 	}
 
-	returnDeck, err = IdCheck(id, deck)
+	cardFound, err = IdCheck(id, deck)
 	if err != nil {
-		return returnDeck, NotFound
+		return cardFound, NotFound
 
 	}
-	return returnDeck, nil
+	return cardFound, nil
 }
 
-func (r flashcardRepo) UpdateMatchingById(id string, card entities.Matching) error {
+func (r flashCardRepo) UpdateMatchingById(id string, card entities.Matching) error {
 	updatedCard := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
@@ -212,7 +213,7 @@ func (r flashcardRepo) UpdateMatchingById(id string, card entities.Matching) err
 				return ConversionError
 			}
 
-			err = ioutil.WriteFile(r.filename, result, 0644)
+			err = ioutil.WriteFile(r.fileName, result, 0644)
 			if err != nil {
 				return StorageError
 			}
@@ -225,10 +226,10 @@ func (r flashcardRepo) UpdateMatchingById(id string, card entities.Matching) err
 
 }
 
-func (r flashcardRepo) UpdateMultipleById(id string, card entities.Multiple) error {
+func (r flashCardRepo) UpdateMultipleById(id string, card entities.Multiple) error {
 	fc := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
@@ -253,7 +254,7 @@ func (r flashcardRepo) UpdateMultipleById(id string, card entities.Multiple) err
 				return ConversionError
 			}
 
-			err = ioutil.WriteFile(r.filename, result, 0644)
+			err = ioutil.WriteFile(r.fileName, result, 0644)
 			if err != nil {
 				return StorageError
 			}
@@ -266,10 +267,10 @@ func (r flashcardRepo) UpdateMultipleById(id string, card entities.Multiple) err
 
 }
 
-func (r flashcardRepo) UpdateInfoById(id string, card entities.Info) error {
+func (r flashCardRepo) UpdateInfoById(id string, card entities.Info) error {
 	fc := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
@@ -292,7 +293,7 @@ func (r flashcardRepo) UpdateInfoById(id string, card entities.Info) error {
 				return ConversionError
 			}
 
-			err = ioutil.WriteFile(r.filename, result, 0644)
+			err = ioutil.WriteFile(r.fileName, result, 0644)
 			if err != nil {
 				return StorageError
 			}
@@ -305,10 +306,10 @@ func (r flashcardRepo) UpdateInfoById(id string, card entities.Info) error {
 
 }
 
-func (r flashcardRepo) UpdateQandAById(id string, card entities.QandA) error {
+func (r flashCardRepo) UpdateQandAById(id string, card entities.QandA) error {
 	fc := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
@@ -332,7 +333,7 @@ func (r flashcardRepo) UpdateQandAById(id string, card entities.QandA) error {
 				return ConversionError
 			}
 
-			err = ioutil.WriteFile(r.filename, result, 0644)
+			err = ioutil.WriteFile(r.fileName, result, 0644)
 			if err != nil {
 				return StorageError
 			}
@@ -345,10 +346,10 @@ func (r flashcardRepo) UpdateQandAById(id string, card entities.QandA) error {
 
 }
 
-func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) error {
+func (r flashCardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) error {
 	fc := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename)
+	file, err := ioutil.ReadFile(r.fileName)
 	if err != nil {
 		return FileError
 	}
@@ -372,7 +373,7 @@ func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) e
 				return ConversionError
 			}
 
-			err = ioutil.WriteFile(r.filename, result, 0644)
+			err = ioutil.WriteFile(r.fileName, result, 0644)
 			if err != nil {
 				return StorageError
 			}
@@ -385,10 +386,10 @@ func (r flashcardRepo) UpdateTrueFalseById(id string, card entities.TrueFalse) e
 
 }
 
-func (r flashcardRepo)DeleteById(id string) error {
+func (r flashCardRepo)DeleteById(id string) error {
 	deck := entities.FlashCardStruct{}
 
-	file, err := ioutil.ReadFile(r.filename) // reads flashcard database
+	file, err := ioutil.ReadFile(r.fileName) // reads flashcard database
 	if err != nil {
 		return FileError                        // checks for errors
 	}
@@ -429,7 +430,7 @@ func (r flashcardRepo)DeleteById(id string) error {
 			return ConversionError
 		}
 
-	err = ioutil.WriteFile(r.filename, result, 0644)
+	err = ioutil.WriteFile(r.fileName, result, 0644)
 		if err != nil {
 			return StorageError
 		}

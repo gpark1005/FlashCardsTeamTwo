@@ -10,52 +10,52 @@ import (
 	"github.com/gpark1005/FlashCardsTeamTwo/entities"
 )
 
-type IFlashcardService interface {
+type IFlashCardService interface {
 	CreateMatching(entities.Matching) error
 	CreateTrueFalse(entities.TrueFalse) error
 	CreateMultiple(entities.Multiple) error
 	CreateInfo(entities.Info) error
-	CreateQandA(entities.QandA) error
+	CreateQnA(entities.QnA) error
 	GetAll() ([]entities.FlashCardStruct, error)
 	GetById(string) (interface{}, error)
 	UpdateMatchingById(string, entities.Matching) error
 	UpdateMultipleById(string, entities.Multiple) error
 	UpdateTrueFalseById(string, entities.TrueFalse) error
 	UpdateInfoById(string, entities.Info) error
-	UpdateQandAById(string, entities.QandA) error
+	UpdateQnAById(string, entities.QnA) error
 	DeleteById(id string) error
 }
 
-type FlashcardHandler struct {
-	serv IFlashcardService
+type FlashCardHandler struct {
+	serv IFlashCardService
 }
 
-func NewFlashcardHandler(f IFlashcardService) FlashcardHandler {
-	return FlashcardHandler{
+func NewFlashcardHandler(f IFlashCardService) FlashCardHandler {
+	return FlashCardHandler{
 		serv: f,
 	}
 }
 
-func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
-	var c map[string]interface{}
+func (f FlashCardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
+	var cardMap map[string]interface{}
 	file, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
-	err = json.Unmarshal(file, &c)
+	err = json.Unmarshal(file, &cardMap)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-	if cardtype, ok := c["Type"]; ok {
-		switch cardtype {
+	if cardType, ok := cardMap["Type"]; ok {
+		switch cardType {
 		case "Matching":
-			matchcard := entities.Matching{}
-			err := json.Unmarshal(file, &matchcard)
+			matchCard := entities.Matching{}
+			err := json.Unmarshal(file, &matchCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = f.serv.CreateMatching(matchcard)
+			err = f.serv.CreateMatching(matchCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -64,13 +64,13 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card created"))
 			w.Header().Set("Content-Type", "application/json")
 		case "Multiple":
-			multiplecard := entities.Multiple{}
-			err := json.Unmarshal(file, &multiplecard)
+			multipleCard := entities.Multiple{}
+			err := json.Unmarshal(file, &multipleCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.CreateMultiple(multiplecard)
+			err = f.serv.CreateMultiple(multipleCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -80,13 +80,13 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card created"))
 			w.Header().Set("Content-Type", "application/json")
 		case "TrueFalse":
-			tfcard := entities.TrueFalse{}
-			err := json.Unmarshal(file, &tfcard)
+			tfCard := entities.TrueFalse{}
+			err := json.Unmarshal(file, &tfCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.CreateTrueFalse(tfcard)
+			err = f.serv.CreateTrueFalse(tfCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -96,13 +96,13 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 
 		case "Info":
-			infocard := entities.Info{}
-			err := json.Unmarshal(file, &infocard)
+			infoCard := entities.Info{}
+			err := json.Unmarshal(file, &infoCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.CreateInfo(infocard)
+			err = f.serv.CreateInfo(infoCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -111,14 +111,14 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card created"))
 			w.Header().Set("Content-Type", "application/json")
 
-		case "QandA":
-			QandAcard := entities.QandA{}
-			err := json.Unmarshal(file, &QandAcard)
+		case "QnA":
+			QnACard := entities.QnA{}
+			err := json.Unmarshal(file, &QnACard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.CreateQandA(QandAcard)
+			err = f.serv.CreateQnA(QnACard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -135,7 +135,7 @@ func (f FlashcardHandler) CreateCard(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
+func (f FlashCardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	allCards, err := f.serv.GetAll()
 	if err != nil {
 		errorHandlers(w, err)
@@ -145,7 +145,7 @@ func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 
 	allCardsBytes, err := json.MarshalIndent(allCards, "", " ")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 
 	}
 
@@ -155,7 +155,7 @@ func (f FlashcardHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
+func (f FlashCardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cardId := vars["Id"]
 
@@ -167,7 +167,7 @@ func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 
 	cardBytes, err := json.MarshalIndent(card, "", " ")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 
 	}
@@ -177,30 +177,30 @@ func (f FlashcardHandler) GetById(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
+func (f FlashCardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cardId := vars["Id"] // get Id by endpoints
 
-	var c map[string]interface{}
+	var cardMap map[string]interface{}
 
 	file, err := ioutil.ReadAll(r.Body) // unmarshal to get the type
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
-	err = json.Unmarshal(file, &c) //unmarshal into map[string]interface{}
+	err = json.Unmarshal(file, &cardMap) //unmarshal into map[string]interface{}
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-	if cardtype, ok := c["Type"]; ok { //check type in map "if type exist" and get the value which is in cardtype
-		switch cardtype { // switching through cardtype and if matches then we unmarshal pass in id and updated info
+	if cardType, ok := cardMap["Type"]; ok { //check type in map "if type exist" and get the value which is in cardtype
+		switch cardType { // switching through cardtype and if matches then we unmarshal pass in id and updated info
 		case "Matching":
-			matchcard := entities.Matching{}
-			err := json.Unmarshal(file, &matchcard)
+			matchCard := entities.Matching{}
+			err := json.Unmarshal(file, &matchCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			err = f.serv.UpdateMatchingById(cardId, matchcard)
+			err = f.serv.UpdateMatchingById(cardId, matchCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -209,13 +209,13 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		case "Multiple":
-			multiplecard := entities.Multiple{}
-			err := json.Unmarshal(file, &multiplecard)
+			multipleCard := entities.Multiple{}
+			err := json.Unmarshal(file, &multipleCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateMultipleById(cardId, multiplecard)
+			err = f.serv.UpdateMultipleById(cardId, multipleCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -225,13 +225,13 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		case "TrueFalse":
-			tfcard := entities.TrueFalse{}
-			err := json.Unmarshal(file, &tfcard)
+			tfCard := entities.TrueFalse{}
+			err := json.Unmarshal(file, &tfCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateTrueFalseById(cardId, tfcard)
+			err = f.serv.UpdateTrueFalseById(cardId, tfCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -241,13 +241,13 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 
 		case "Info":
-			infocard := entities.Info{}
-			err := json.Unmarshal(file, &infocard)
+			infoCard := entities.Info{}
+			err := json.Unmarshal(file, &infoCard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateInfoById(cardId, infocard)
+			err = f.serv.UpdateInfoById(cardId, infoCard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -256,14 +256,14 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 
-		case "QandA":
-			QandAcard := entities.QandA{}
-			err := json.Unmarshal(file, &QandAcard)
+		case "QnA":
+			QnACard := entities.QnA{}
+			err := json.Unmarshal(file, &QnACard)
 			if err != nil {
 				log.Fatalln(err)
 			}
 
-			err = f.serv.UpdateQandAById(cardId, QandAcard)
+			err = f.serv.UpdateQnAById(cardId, QnACard)
 			if err != nil {
 				errorHandlers(w, err)
 				return
@@ -272,7 +272,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Card updated"))
 			w.Header().Set("Content-Type", "application/json")
 		default:
-			http.Error(w, "invalid type", http.StatusUnprocessableEntity)
+			http.Error(w, "invalid type", http.StatusBadRequest)
 			return
 		}
 
@@ -280,7 +280,7 @@ func (f FlashcardHandler) UpdateById(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (f FlashcardHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
+func (f FlashCardHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["Id"]
 
