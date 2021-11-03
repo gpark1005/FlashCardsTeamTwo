@@ -29,7 +29,9 @@ func ValidateMatching(m entities.Matching) error {
 			}
 		}
 	}
-	if len(cardOption) != len(cardQuestion) {
+	if len(cardOption) == 0 {
+		return EmptyOption
+	} else if len(cardOption) != len(cardQuestion) {
 		return UnacceptableFormat
 	} else {
 		for _, v := range cardOption {
@@ -38,7 +40,9 @@ func ValidateMatching(m entities.Matching) error {
 			}
 		}
 	}
-	if len(cardAnswer) != len(cardQuestion) {
+	if len(cardAnswer) == 0 {
+		return EmptyAnswer
+	} else if len(cardAnswer) != len(cardQuestion) {
 		return UnacceptableFormat
 	} else {
 		for k, v := range cardAnswer {

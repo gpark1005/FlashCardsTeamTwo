@@ -57,6 +57,11 @@ func errorHandlers(w http.ResponseWriter, err error) {
 	case Repo.NotFound:
 		http.Error(w, err.Error(), http.StatusNotFound)
 		return
-
+	case service.EmptyAnswer:
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	case service.EmptyOption:
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
 	}
 }
